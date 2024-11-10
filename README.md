@@ -1,5 +1,9 @@
 # Golang_LanguageAnalyzer
 
+## Requisitos
+
+- Python 3.7 o superior
+
 ## Analizador Léxico
 
 El **analizador léxico** para el lenguaje de programación **Go** tiene como objetivo principal  leer y procesar archivos fuente escritos en Go, identificando y clasificando cada uno de los tokens presentes en el código, como palabras clave, identificadores, literales, operadores, y otros elementos léxicos propios del lenguaje.
@@ -30,17 +34,12 @@ El **analizador léxico** para el lenguaje de programación **Go** tiene como ob
 
    ![Tokens Identificados](readme_Material/tokens_identificados.png)
 
-## Requisitos
-
-- Python 3.7 o superior
-
 
 
 ## Autores
 
-Desarrollado por [Alex Peñafiel].
-Desarrollado por [Ronald Gaibor].
-Desarrollado por [Daniel Villamar].
+- Desarrollado por [Alex Peñafiel].
+- Desarrollado por [Ronald Gaibor].
+- Desarrollado por [Daniel Villamar].
 
 ---
-
