@@ -1,6 +1,5 @@
 import ply.lex as lex
 import leerGo as leerGo
-import logGo as logGo
 
 # ALEX PEÑAFIEL
 reserved = {
@@ -39,12 +38,18 @@ reserved = {
     'complex64':'COMPLEX64',
     'complex128':'COMPLEX128',
     'string':'STRING',
-    'fmt.Println':'FMT.PRINTLN',
-    'fmt.Print':'FMT.PRINT',
-    'fmt.Sprintf':'FMT.SPRINTF'
+    'fmt':'FMT',
+    'Println':'PRINTLN',
+    'Print':'PRINT',
+    'Sprintf':'SPRINTF'
 }
 # Daniel Villamar
 tokens = (
+    "COMMENT_LINE",
+    "COMMENT_BLOCK",
+    "PLACEHOLDER",
+    "CADENA",
+    "VARIABLE",
     "INTEGER",
     "FLOAT",
     "PLUS",
@@ -65,13 +70,14 @@ tokens = (
     "COMA",
     "COMILLA",
     "COMILLA_SIMPLE",
-)
+    "IGUAL",
+    "SEPARADOR"
+) + tuple(reserved.values())
 
 # Daniel Villamar
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_MULT = r'\*'
-t_DIVIDE = r'/'
 t_MOD = r"%"
 t_EQ = r"=="
 t_ASIG = r":="
@@ -86,9 +92,34 @@ t_DOS_PUNTOS = r":"
 t_COMA = r","
 t_COMILLA = r'"'
 t_COMILLA_SIMPLE = r"'"
+t_IGUAL = r"="
+t_SEPARADOR = r"\|"
 
 
 #INICIO DE LAS EXPRESIONES REGULARES
+
+def t_COMMENT_LINE(t):
+    r'//.*'
+    pass
+
+def t_COMMENT_BLOCK(t):
+    r'/\*.*?\*/'
+    t.lexer.lineno += t.value.count('\n')
+    pass
+
+def t_DIVIDE(t):
+    r'/'
+    return t
+
+def t_FLOAT(t):
+    r'[0-9]*\.[0-9]+'
+    t.value = float(t.value)
+    return t
+
+def t_INTEGER(t):
+    r'\d+'
+    t.value = int(t.value)
+    return t
 
 def t_newline(t):
     r'\n+'
@@ -97,8 +128,21 @@ def t_newline(t):
 t_ignore = ' \t'
 
 def t_error(t):
-    logGo.logging.warning("Illegal character '%s'" % t.value[0])
+    print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
+
+def t_CADENA(t):
+    r'"([^"\\]|\\.)*"'
+    return t
+
+def t_PLACEHOLDER(t):
+    r'%[sdf]'  # Captura %s, %d, %f, etc.
+    return t
+
+def t_VARIABLE(t):
+    r'[a-zA-Z]\w*'
+    t.type = reserved.get(t.value, "VARIABLE")
+    return t
 
 
 
@@ -117,4 +161,4 @@ while True:
     tok = lexer.token()
     if not tok:
         break  # No more input
-    logGo.logging.info(tok)
+    print(tok)
