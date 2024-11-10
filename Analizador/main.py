@@ -1,4 +1,5 @@
 import ply.lex as lex
+import leerGo as leerGo
 
 # ALEX PEÑAFIEL
 reserved = {
@@ -37,10 +38,12 @@ reserved = {
     'complex64':'COMPLEX64',
     'complex128':'COMPLEX128',
     'string':'STRING',
-    'Println':'PRINTLN'
+    'fmt.Println':'FMT.PRINTLN',
+    'fmt.Print':'FMT.PRINT',
+    'fmt.Sprintf':'FMT.SPRINTF'
 }
 # Daniel Villamar
-tokenslist = (
+tokens = (
     "INTEGER",
     "FLOAT",
     "PLUS",
@@ -50,14 +53,14 @@ tokenslist = (
     "MOD",
     "EQ",
     "ASIG",
-    "LPARENT"
-    "DPARENT"
+    "LPARENT",
+    "RPARENT",
     "LCORCH",
     "RCORCH",
     "L_LLAVE",
     "R_LLAVE",
     "PUNTO",
-    "DOS_PUNTOS"
+    "DOS_PUNTOS",
     "COMA",
     "COMILLA",
     "COMILLA_SIMPLE",
@@ -71,15 +74,46 @@ t_DIVIDE = r'/'
 t_MOD = r"%"
 t_EQ = r"=="
 t_ASIG = r":="
-t_LPAREN = r'\('
-t_RPAREN = r'\)'
-t_LCORCH = r"["
-t_RCORCH = r"]"
-t_L_LLAVE = r"{"
-t_R_LLAVE = r"}"
-t_PUNTO = r"."
+t_LPARENT = r'\('
+t_RPARENT = r'\)'
+t_LCORCH = r"\["
+t_RCORCH = r"\]"
+t_L_LLAVE = r"\{"
+t_R_LLAVE = r"\}"
+t_PUNTO = r"\."
 t_DOS_PUNTOS = r":"
 t_COMA = r","
 t_COMILLA = r'"'
 t_COMILLA_SIMPLE = r"'"
 
+
+#INICIO DE LAS EXPRESIONES REGULARES
+
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
+
+t_ignore = ' \t'
+
+def t_error(t):
+    print("Illegal character '%s'" % t.value[0])
+    t.lexer.skip(1)
+
+
+
+#FIN DE LAS EXPRESIONES REGULARES
+
+"""Daniel Villamar:
+Esta línea de codigo hace uso de la función para leer el codigo Go, retornando en un string largo el cual será analizado por el lexer"
+"""
+data=leerGo.codigo_go
+
+
+lexer = lex.lex()
+lexer.input(data)
+while True:
+
+    tok = lexer.token()
+    if not tok:
+        break  # No more input
+    print(tok)
