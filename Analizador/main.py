@@ -121,6 +121,19 @@ def t_INTEGER(t):
     t.value = int(t.value)
     return t
 
+def t_PLACEHOLDER(t):
+    r'%[sdf]'  # Captura %s, %d, %f, etc.
+    return t
+
+def t_CADENA(t):
+    r'"([^"\\]|\\.)*"'
+    return t
+
+def t_VARIABLE(t):
+    r'[a-zA-Z]\w*'
+    t.type = reserved.get(t.value, "VARIABLE")
+    return t
+
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
@@ -130,21 +143,6 @@ t_ignore = ' \t'
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
-
-def t_CADENA(t):
-    r'"([^"\\]|\\.)*"'
-    return t
-
-def t_PLACEHOLDER(t):
-    r'%[sdf]'  # Captura %s, %d, %f, etc.
-    return t
-
-def t_VARIABLE(t):
-    r'[a-zA-Z]\w*'
-    t.type = reserved.get(t.value, "VARIABLE")
-    return t
-
-
 
 #FIN DE LAS EXPRESIONES REGULARES
 
