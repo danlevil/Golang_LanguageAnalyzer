@@ -1,5 +1,6 @@
 import ply.lex as lex
 import leerGo as leerGo
+import logGo as logGo
 
 # ALEX PEÑAFIEL
 reserved = {
@@ -71,7 +72,10 @@ tokens = (
     "COMILLA",
     "COMILLA_SIMPLE",
     "IGUAL",
-    "SEPARADOR"
+    "SEPARADOR",
+    "PUNTO_Y_COMA",
+    "MENOR_QUE",
+    "MAYOR_QUE",
 ) + tuple(reserved.values())
 
 # Daniel Villamar
@@ -95,6 +99,10 @@ t_COMILLA_SIMPLE = r"'"
 t_IGUAL = r"="
 t_SEPARADOR = r"\|"
 
+# Ronald Gaibor
+t_PUNTO_Y_COMA = r";"
+t_MENOR_QUE = r"<"
+t_MAYOR_QUE = r">"
 
 #INICIO DE LAS EXPRESIONES REGULARES
 
@@ -141,7 +149,7 @@ def t_newline(t):
 t_ignore = ' \t'
 
 def t_error(t):
-    print("Illegal character '%s'" % t.value[0])
+    logGo.logging.warning("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
 
 #FIN DE LAS EXPRESIONES REGULARES
@@ -159,4 +167,4 @@ while True:
     tok = lexer.token()
     if not tok:
         break  # No more input
-    print(tok)
+    logGo.logging.info(tok)

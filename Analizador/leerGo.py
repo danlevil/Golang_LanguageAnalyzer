@@ -1,6 +1,6 @@
 #Daniel Villamar
 def pedirNumeroTest():
-    cantidadTest=2
+    cantidadTest=3
     print(f"De momento existen {cantidadTest} test para su uso\nSeleccione cual desea probar:")
     numeroTest=input()
     return numeroTest
