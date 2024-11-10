@@ -1,0 +1,2 @@
+2024-11-10 13:38:42,376 - INFO - This is an info message.
+2024-11-10 13:38:42,376 - WARNING - This is a warning message.

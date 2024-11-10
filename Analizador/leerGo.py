@@ -1,7 +1,7 @@
 #Daniel Villamar
 def pedirNumeroTest():
     cantidadTest=2
-    print(f"De momento existen ${cantidadTest} test para su uso\nSeleccione cual desea probar:")
+    print(f"De momento existen {cantidadTest} test para su uso\nSeleccione cual desea probar:")
     numeroTest=input()
     return numeroTest
 
@@ -19,6 +19,6 @@ def leer_archivo_go(ruta_archivo):
 
 numeroTest=pedirNumeroTest()
 algoritmo= "algoritmo"+numeroTest+".go"
-ruta_archivo_go = "./testeos/"+algoritmo
+ruta_archivo_go = "../testeos/"+algoritmo
 
 codigo_go = leer_archivo_go(ruta_archivo_go)

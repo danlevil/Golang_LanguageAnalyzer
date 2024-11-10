@@ -1,5 +1,6 @@
 import ply.lex as lex
 import leerGo as leerGo
+import logGo as logGo
 
 # ALEX PEÑAFIEL
 reserved = {
@@ -96,7 +97,7 @@ def t_newline(t):
 t_ignore = ' \t'
 
 def t_error(t):
-    print("Illegal character '%s'" % t.value[0])
+    logGo.logging.warning("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
 
 
@@ -116,4 +117,4 @@ while True:
     tok = lexer.token()
     if not tok:
         break  # No more input
-    print(tok)
+    logGo.logging.info(tok)
