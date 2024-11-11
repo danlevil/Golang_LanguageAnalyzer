@@ -111,7 +111,7 @@ def t_COMMENT_LINE(t):
     pass
 
 def t_COMMENT_BLOCK(t):
-    r'/\*.*?\*/'
+    r'/\*([\s\S]*?)\*/'
     t.lexer.lineno += t.value.count('\n')
     pass
 

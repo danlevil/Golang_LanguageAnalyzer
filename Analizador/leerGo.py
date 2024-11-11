@@ -1,7 +1,7 @@
 #Daniel Villamar
 import os
 def pedirNumeroTest():
-    cantidadTest=3
+    cantidadTest=4
     print(f"De momento existen {cantidadTest} test para su uso\nSeleccione cual desea probar:")
     numeroTest=input()
     return numeroTest
