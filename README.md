@@ -18,6 +18,7 @@ El **analizador léxico** para el lenguaje de programación **Go** tiene como ob
 - `Analizador/leerGo.py`: Archivo principal para leer archivos de prueba y convertirlos en cadenas de texto que serán analizadas en el archivo **main.py**.
 - `Analizador/logGo.py`: Genera archivos **.log** de los test realizados por distintos usuarios.
 - `testeos/`: Carpeta que contiene archivos de prueba en Go que serán analizados por el sistema.
+- `logs/`: Carpeta que contiene los logs respectivos de cada prueba realizada.
 
 ## Uso
 
