@@ -1,9 +1,14 @@
-#Daniel Villamar
+# Daniel Villamar
+# Ronald Gaibor
+
 import os
+
+def contar_algoritmos(directory):
+    return len([f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))])
+
 def pedirNumeroTest():
-    cantidadTest=4
-    print(f"De momento existen {cantidadTest} test para su uso\nSeleccione cual desea probar:")
-    numeroTest=input()
+    cantidadTest = contar_algoritmos('../testeos')
+    numeroTest = input(f"De momento existen {cantidadTest} tests para su uso\nSeleccione cual desea probar: ")
     return numeroTest
 
 def leer_archivo_go(ruta_archivo):
@@ -17,6 +22,7 @@ def leer_archivo_go(ruta_archivo):
     except Exception as e:
         print(f"Ocurrió un error al leer el archivo: {e}")
         return ""
+
 '''
 numeroTest=pedirNumeroTest()
 algoritmo= "algoritmo"+numeroTest+".go"
