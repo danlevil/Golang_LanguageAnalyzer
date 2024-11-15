@@ -1,0 +1,329 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    BOOL
+    BREAK
+    CADENA
+    CASE
+    COMA
+    COMILLA
+    COMILLA_SIMPLE
+    COMMENT_BLOCK
+    COMMENT_LINE
+    COMPLEX128
+    COMPLEX64
+    CONST
+    CONTINUE
+    DEFAULT
+    DOS_PUNTOS
+    ELSE
+    EQ
+    FALSE
+    FLOAT32
+    FLOAT64
+    FMT
+    FOR
+    FUNC
+    IF
+    IGUAL
+    IMPORT
+    INT
+    INT16
+    INT32
+    INT64
+    INTERFACE
+    LCORCH
+    LPARENT
+    L_LLAVE
+    MAP
+    MAYOR_QUE
+    MENOR_QUE
+    PACKAGE
+    PLACEHOLDER
+    PRINT
+    PRINTLN
+    PUNTO
+    PUNTO_Y_COMA
+    RANGE
+    RCORCH
+    RPARENT
+    R_LLAVE
+    SEPARADOR
+    SPRINTF
+    STRING
+    STRUCT
+    SWITCH
+    TRUE
+    TYPE
+    UINT
+    UINT16
+    UINT32
+    UINT64
+    VAR
+    return
+
+Grammar
+
+Rule 0     S' -> asignacion
+Rule 1     asignacion -> VARIABLE ASIG operaAritmetica
+Rule 2     operaAritmetica -> valor
+Rule 3     operaAritmetica -> valor operadorArit operaAritmetica
+Rule 4     valor -> INTEGER
+Rule 5     valor -> FLOAT
+Rule 6     valor -> VARIABLE
+Rule 7     operadorArit -> PLUS
+Rule 8     operadorArit -> MINUS
+Rule 9     operadorArit -> MULT
+Rule 10    operadorArit -> DIVIDE
+Rule 11    operadorArit -> MOD
+
+Terminals, with rules where they appear
+
+ASIG                 : 1
+BOOL                 : 
+BREAK                : 
+CADENA               : 
+CASE                 : 
+COMA                 : 
+COMILLA              : 
+COMILLA_SIMPLE       : 
+COMMENT_BLOCK        : 
+COMMENT_LINE         : 
+COMPLEX128           : 
+COMPLEX64            : 
+CONST                : 
+CONTINUE             : 
+DEFAULT              : 
+DIVIDE               : 10
+DOS_PUNTOS           : 
+ELSE                 : 
+EQ                   : 
+FALSE                : 
+FLOAT                : 5
+FLOAT32              : 
+FLOAT64              : 
+FMT                  : 
+FOR                  : 
+FUNC                 : 
+IF                   : 
+IGUAL                : 
+IMPORT               : 
+INT                  : 
+INT16                : 
+INT32                : 
+INT64                : 
+INTEGER              : 4
+INTERFACE            : 
+LCORCH               : 
+LPARENT              : 
+L_LLAVE              : 
+MAP                  : 
+MAYOR_QUE            : 
+MENOR_QUE            : 
+MINUS                : 8
+MOD                  : 11
+MULT                 : 9
+PACKAGE              : 
+PLACEHOLDER          : 
+PLUS                 : 7
+PRINT                : 
+PRINTLN              : 
+PUNTO                : 
+PUNTO_Y_COMA         : 
+RANGE                : 
+RCORCH               : 
+RPARENT              : 
+R_LLAVE              : 
+SEPARADOR            : 
+SPRINTF              : 
+STRING               : 
+STRUCT               : 
+SWITCH               : 
+TRUE                 : 
+TYPE                 : 
+UINT                 : 
+UINT16               : 
+UINT32               : 
+UINT64               : 
+VAR                  : 
+VARIABLE             : 1 6
+error                : 
+return               : 
+
+Nonterminals, with rules where they appear
+
+asignacion           : 0
+operaAritmetica      : 1 3
+operadorArit         : 3
+valor                : 2 3
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . asignacion
+    (1) asignacion -> . VARIABLE ASIG operaAritmetica
+
+    VARIABLE        shift and go to state 2
+
+    asignacion                     shift and go to state 1
+
+state 1
+
+    (0) S' -> asignacion .
+
+
+
+state 2
+
+    (1) asignacion -> VARIABLE . ASIG operaAritmetica
+
+    ASIG            shift and go to state 3
+
+
+state 3
+
+    (1) asignacion -> VARIABLE ASIG . operaAritmetica
+    (2) operaAritmetica -> . valor
+    (3) operaAritmetica -> . valor operadorArit operaAritmetica
+    (4) valor -> . INTEGER
+    (5) valor -> . FLOAT
+    (6) valor -> . VARIABLE
+
+    INTEGER         shift and go to state 7
+    FLOAT           shift and go to state 8
+    VARIABLE        shift and go to state 4
+
+    operaAritmetica                shift and go to state 5
+    valor                          shift and go to state 6
+
+state 4
+
+    (6) valor -> VARIABLE .
+
+    PLUS            reduce using rule 6 (valor -> VARIABLE .)
+    MINUS           reduce using rule 6 (valor -> VARIABLE .)
+    MULT            reduce using rule 6 (valor -> VARIABLE .)
+    DIVIDE          reduce using rule 6 (valor -> VARIABLE .)
+    MOD             reduce using rule 6 (valor -> VARIABLE .)
+    $end            reduce using rule 6 (valor -> VARIABLE .)
+
+
+state 5
+
+    (1) asignacion -> VARIABLE ASIG operaAritmetica .
+
+    $end            reduce using rule 1 (asignacion -> VARIABLE ASIG operaAritmetica .)
+
+
+state 6
+
+    (2) operaAritmetica -> valor .
+    (3) operaAritmetica -> valor . operadorArit operaAritmetica
+    (7) operadorArit -> . PLUS
+    (8) operadorArit -> . MINUS
+    (9) operadorArit -> . MULT
+    (10) operadorArit -> . DIVIDE
+    (11) operadorArit -> . MOD
+
+    $end            reduce using rule 2 (operaAritmetica -> valor .)
+    PLUS            shift and go to state 10
+    MINUS           shift and go to state 11
+    MULT            shift and go to state 12
+    DIVIDE          shift and go to state 13
+    MOD             shift and go to state 14
+
+    operadorArit                   shift and go to state 9
+
+state 7
+
+    (4) valor -> INTEGER .
+
+    PLUS            reduce using rule 4 (valor -> INTEGER .)
+    MINUS           reduce using rule 4 (valor -> INTEGER .)
+    MULT            reduce using rule 4 (valor -> INTEGER .)
+    DIVIDE          reduce using rule 4 (valor -> INTEGER .)
+    MOD             reduce using rule 4 (valor -> INTEGER .)
+    $end            reduce using rule 4 (valor -> INTEGER .)
+
+
+state 8
+
+    (5) valor -> FLOAT .
+
+    PLUS            reduce using rule 5 (valor -> FLOAT .)
+    MINUS           reduce using rule 5 (valor -> FLOAT .)
+    MULT            reduce using rule 5 (valor -> FLOAT .)
+    DIVIDE          reduce using rule 5 (valor -> FLOAT .)
+    MOD             reduce using rule 5 (valor -> FLOAT .)
+    $end            reduce using rule 5 (valor -> FLOAT .)
+
+
+state 9
+
+    (3) operaAritmetica -> valor operadorArit . operaAritmetica
+    (2) operaAritmetica -> . valor
+    (3) operaAritmetica -> . valor operadorArit operaAritmetica
+    (4) valor -> . INTEGER
+    (5) valor -> . FLOAT
+    (6) valor -> . VARIABLE
+
+    INTEGER         shift and go to state 7
+    FLOAT           shift and go to state 8
+    VARIABLE        shift and go to state 4
+
+    valor                          shift and go to state 6
+    operaAritmetica                shift and go to state 15
+
+state 10
+
+    (7) operadorArit -> PLUS .
+
+    INTEGER         reduce using rule 7 (operadorArit -> PLUS .)
+    FLOAT           reduce using rule 7 (operadorArit -> PLUS .)
+    VARIABLE        reduce using rule 7 (operadorArit -> PLUS .)
+
+
+state 11
+
+    (8) operadorArit -> MINUS .
+
+    INTEGER         reduce using rule 8 (operadorArit -> MINUS .)
+    FLOAT           reduce using rule 8 (operadorArit -> MINUS .)
+    VARIABLE        reduce using rule 8 (operadorArit -> MINUS .)
+
+
+state 12
+
+    (9) operadorArit -> MULT .
+
+    INTEGER         reduce using rule 9 (operadorArit -> MULT .)
+    FLOAT           reduce using rule 9 (operadorArit -> MULT .)
+    VARIABLE        reduce using rule 9 (operadorArit -> MULT .)
+
+
+state 13
+
+    (10) operadorArit -> DIVIDE .
+
+    INTEGER         reduce using rule 10 (operadorArit -> DIVIDE .)
+    FLOAT           reduce using rule 10 (operadorArit -> DIVIDE .)
+    VARIABLE        reduce using rule 10 (operadorArit -> DIVIDE .)
+
+
+state 14
+
+    (11) operadorArit -> MOD .
+
+    INTEGER         reduce using rule 11 (operadorArit -> MOD .)
+    FLOAT           reduce using rule 11 (operadorArit -> MOD .)
+    VARIABLE        reduce using rule 11 (operadorArit -> MOD .)
+
+
+state 15
+
+    (3) operaAritmetica -> valor operadorArit operaAritmetica .
+
+    $end            reduce using rule 3 (operaAritmetica -> valor operadorArit operaAritmetica .)
+
