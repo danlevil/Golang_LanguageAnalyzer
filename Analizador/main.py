@@ -16,14 +16,27 @@ def p_sentencia(p):
                 | funcion'''
 
 
-# IF-ELSE SWITCH FOR WHILE
+# IF-ELSE SWITCH FOR
 
 
 # IMPRESION
-def p_impresion(p):
-    '''impresion : PRINT LPARENT parametros RPARENT
-                | PRINT LPARENT RPARENT'''
+def p_impresionSinSalto(p):
+    '''impresionSinSalto : FMT PUNTO PRINT LPARENT parametros RPARENT
+                | FMT PUNTO PRINT LPARENT RPARENT
+                | FMT PUNTO PRINT LPARENT CADENA RPARENT'''
 
+def p_impresionConSalto(p):
+    '''impresionConSalto : FMT PUNTO PRINTLN LPARENT parametros RPARENT
+                | FMT PUNTO PRINTLN LPARENT RPARENT
+                | FMT PUNTO PRINTLN LPARENT CADENA RPARENT'''
+
+def p_impresionEspecial(p):
+    '''impresionEspecial : FMT PUNTO SPRINTF LPARENT CADENA COMMA parametros RPARENT
+                | FMT PUNTO SPRINTF LPARENT RPARENT'''
+
+# PEDIR DATOS POR CONSOLA
+def p_impresionEspecial(p):
+    'impresionEspecial : FMT PUNTO SCANFLN LPARENT AMPERSAND VARIABLE RPARENT'
 
 # DEFINICIÓN DE UNA FUNCIÓN
 def p_defFuncion(p):

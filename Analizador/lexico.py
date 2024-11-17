@@ -42,7 +42,8 @@ reserved = {
     'fmt':'FMT',
     'Println':'PRINTLN',
     'Print':'PRINT',
-    'Sprintf':'SPRINTF'
+    'Sprintf':'SPRINTF',
+    'Scanln':'SCANLN'
 }
 # Daniel Villamar
 tokens = (
@@ -76,6 +77,7 @@ tokens = (
     "PUNTO_Y_COMA",
     "MENOR_QUE",
     "MAYOR_QUE",
+    "AMPERSAND",
 ) + tuple(reserved.values())
 
 # Daniel Villamar
@@ -103,6 +105,8 @@ t_SEPARADOR = r"\|"
 t_PUNTO_Y_COMA = r";"
 t_MENOR_QUE = r"<"
 t_MAYOR_QUE = r">"
+
+t_AMPERSAND = r'&'
 
 #INICIO DE LAS EXPRESIONES REGULARES
 
