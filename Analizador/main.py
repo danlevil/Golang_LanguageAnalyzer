@@ -20,6 +20,11 @@ def p_sentencia(p):
 
 
 # IMPRESION
+def p_impresion(p):
+    '''impresion: impresionSinSalto
+                | impresionConSalto
+                | impresionEspecial'''
+
 def p_impresionSinSalto(p):
     '''impresionSinSalto : FMT PUNTO PRINT LPARENT parametros RPARENT
                 | FMT PUNTO PRINT LPARENT RPARENT
@@ -35,8 +40,8 @@ def p_impresionEspecial(p):
                 | FMT PUNTO SPRINTF LPARENT RPARENT'''
 
 # PEDIR DATOS POR CONSOLA
-def p_impresionEspecial(p):
-    'impresionEspecial : FMT PUNTO SCANFLN LPARENT AMPERSAND VARIABLE RPARENT'
+def p_pedirPorPantalla(p):
+    'pedirPorPantalla : FMT PUNTO SCANFLN LPARENT AMPERSAND VARIABLE RPARENT'
 
 # DEFINICIÓN DE UNA FUNCIÓN
 def p_defFuncion(p):
