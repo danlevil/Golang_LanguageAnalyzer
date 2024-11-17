@@ -21,7 +21,7 @@ reserved = {
     'inteface':'INTERFACE',
     'map':'MAP',
     'range':'RANGE',
-    'return':'return',
+    'return':'RETURN',
     'type':'TYPE',
     'var':'VAR',
     'package':'PACKAGE',
@@ -68,7 +68,7 @@ tokens = (
     "R_LLAVE",
     "PUNTO",
     "DOS_PUNTOS",
-    "COMA",
+    "COMMA",
     "COMILLA",
     "COMILLA_SIMPLE",
     "IGUAL",
@@ -93,7 +93,7 @@ t_L_LLAVE = r"\{"
 t_R_LLAVE = r"\}"
 t_PUNTO = r"\."
 t_DOS_PUNTOS = r":"
-t_COMA = r","
+t_COMMA = r","
 t_COMILLA = r'"'
 t_COMILLA_SIMPLE = r"'"
 t_IGUAL = r"="

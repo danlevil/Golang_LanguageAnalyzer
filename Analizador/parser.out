@@ -2,328 +2,1074 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    BOOL
     BREAK
     CADENA
     CASE
-    COMA
     COMILLA
     COMILLA_SIMPLE
     COMMENT_BLOCK
     COMMENT_LINE
-    COMPLEX128
-    COMPLEX64
     CONST
     CONTINUE
     DEFAULT
     DOS_PUNTOS
     ELSE
-    EQ
     FALSE
-    FLOAT32
-    FLOAT64
     FMT
     FOR
-    FUNC
     IF
     IGUAL
     IMPORT
-    INT
-    INT16
-    INT32
-    INT64
     INTERFACE
     LCORCH
-    LPARENT
-    L_LLAVE
     MAP
-    MAYOR_QUE
-    MENOR_QUE
     PACKAGE
     PLACEHOLDER
-    PRINT
     PRINTLN
     PUNTO
     PUNTO_Y_COMA
     RANGE
     RCORCH
-    RPARENT
-    R_LLAVE
     SEPARADOR
     SPRINTF
-    STRING
     STRUCT
     SWITCH
     TRUE
     TYPE
-    UINT
-    UINT16
-    UINT32
-    UINT64
     VAR
-    return
 
 Grammar
 
-Rule 0     S' -> asignacion
-Rule 1     asignacion -> VARIABLE ASIG operaAritmetica
-Rule 2     operaAritmetica -> valor
-Rule 3     operaAritmetica -> valor operadorArit operaAritmetica
-Rule 4     valor -> INTEGER
-Rule 5     valor -> FLOAT
-Rule 6     valor -> VARIABLE
-Rule 7     operadorArit -> PLUS
-Rule 8     operadorArit -> MINUS
-Rule 9     operadorArit -> MULT
-Rule 10    operadorArit -> DIVIDE
-Rule 11    operadorArit -> MOD
+Rule 0     S' -> programa
+Rule 1     programa -> sentencia
+Rule 2     programa -> sentencia programa
+Rule 3     sentencia -> impresion
+Rule 4     sentencia -> asignacion
+Rule 5     sentencia -> defFuncion
+Rule 6     sentencia -> funcion
+Rule 7     impresion -> PRINT LPARENT parametros RPARENT
+Rule 8     impresion -> PRINT LPARENT RPARENT
+Rule 9     defFuncion -> FUNC VARIABLE LPARENT defParametros RPARENT tipo L_LLAVE cuerpoFuncion R_LLAVE
+Rule 10    defParametros -> defParametro
+Rule 11    defParametros -> defParametro COMMA defParametros
+Rule 12    defParametro -> VARIABLE tipo
+Rule 13    cuerpoFuncion -> retorno
+Rule 14    cuerpoFuncion -> sentencia cuerpoFuncion
+Rule 15    retorno -> RETURN expresion
+Rule 16    funcion -> VARIABLE LPARENT parametros RPARENT
+Rule 17    funcion -> VARIABLE LPARENT RPARENT
+Rule 18    parametros -> parametro
+Rule 19    parametros -> parametro COMMA parametros
+Rule 20    parametro -> expresion
+Rule 21    asignacion -> VARIABLE ASIG expresion
+Rule 22    expresion -> valor
+Rule 23    expresion -> valor operadorArit expresion
+Rule 24    valor -> INTEGER
+Rule 25    valor -> FLOAT
+Rule 26    valor -> STRING
+Rule 27    valor -> VARIABLE
+Rule 28    tipo -> INT
+Rule 29    tipo -> INT16
+Rule 30    tipo -> INT32
+Rule 31    tipo -> INT64
+Rule 32    tipo -> UINT
+Rule 33    tipo -> UINT16
+Rule 34    tipo -> UINT32
+Rule 35    tipo -> UINT64
+Rule 36    tipo -> BOOL
+Rule 37    tipo -> FLOAT32
+Rule 38    tipo -> FLOAT64
+Rule 39    tipo -> COMPLEX64
+Rule 40    tipo -> COMPLEX128
+Rule 41    tipo -> STRING
+Rule 42    operadorArit -> PLUS
+Rule 43    operadorArit -> MINUS
+Rule 44    operadorArit -> MULT
+Rule 45    operadorArit -> DIVIDE
+Rule 46    operadorArit -> MOD
+Rule 47    operadorMat -> EQ
+Rule 48    operadorMat -> MENOR_QUE
+Rule 49    operadorMat -> MAYOR_QUE
 
 Terminals, with rules where they appear
 
-ASIG                 : 1
-BOOL                 : 
+ASIG                 : 21
+BOOL                 : 36
 BREAK                : 
 CADENA               : 
 CASE                 : 
-COMA                 : 
 COMILLA              : 
 COMILLA_SIMPLE       : 
+COMMA                : 11 19
 COMMENT_BLOCK        : 
 COMMENT_LINE         : 
-COMPLEX128           : 
-COMPLEX64            : 
+COMPLEX128           : 40
+COMPLEX64            : 39
 CONST                : 
 CONTINUE             : 
 DEFAULT              : 
-DIVIDE               : 10
+DIVIDE               : 45
 DOS_PUNTOS           : 
 ELSE                 : 
-EQ                   : 
+EQ                   : 47
 FALSE                : 
-FLOAT                : 5
-FLOAT32              : 
-FLOAT64              : 
+FLOAT                : 25
+FLOAT32              : 37
+FLOAT64              : 38
 FMT                  : 
 FOR                  : 
-FUNC                 : 
+FUNC                 : 9
 IF                   : 
 IGUAL                : 
 IMPORT               : 
-INT                  : 
-INT16                : 
-INT32                : 
-INT64                : 
-INTEGER              : 4
+INT                  : 28
+INT16                : 29
+INT32                : 30
+INT64                : 31
+INTEGER              : 24
 INTERFACE            : 
 LCORCH               : 
-LPARENT              : 
-L_LLAVE              : 
+LPARENT              : 7 8 9 16 17
+L_LLAVE              : 9
 MAP                  : 
-MAYOR_QUE            : 
-MENOR_QUE            : 
-MINUS                : 8
-MOD                  : 11
-MULT                 : 9
+MAYOR_QUE            : 49
+MENOR_QUE            : 48
+MINUS                : 43
+MOD                  : 46
+MULT                 : 44
 PACKAGE              : 
 PLACEHOLDER          : 
-PLUS                 : 7
-PRINT                : 
+PLUS                 : 42
+PRINT                : 7 8
 PRINTLN              : 
 PUNTO                : 
 PUNTO_Y_COMA         : 
 RANGE                : 
 RCORCH               : 
-RPARENT              : 
-R_LLAVE              : 
+RETURN               : 15
+RPARENT              : 7 8 9 16 17
+R_LLAVE              : 9
 SEPARADOR            : 
 SPRINTF              : 
-STRING               : 
+STRING               : 26 41
 STRUCT               : 
 SWITCH               : 
 TRUE                 : 
 TYPE                 : 
-UINT                 : 
-UINT16               : 
-UINT32               : 
-UINT64               : 
+UINT                 : 32
+UINT16               : 33
+UINT32               : 34
+UINT64               : 35
 VAR                  : 
-VARIABLE             : 1 6
+VARIABLE             : 9 12 16 17 21 27
 error                : 
-return               : 
 
 Nonterminals, with rules where they appear
 
-asignacion           : 0
-operaAritmetica      : 1 3
-operadorArit         : 3
-valor                : 2 3
+asignacion           : 4
+cuerpoFuncion        : 9 14
+defFuncion           : 5
+defParametro         : 10 11
+defParametros        : 9 11
+expresion            : 15 20 21 23
+funcion              : 6
+impresion            : 3
+operadorArit         : 23
+operadorMat          : 
+parametro            : 18 19
+parametros           : 7 16 19
+programa             : 2 0
+retorno              : 13
+sentencia            : 1 2 14
+tipo                 : 9 12
+valor                : 22 23
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . asignacion
-    (1) asignacion -> . VARIABLE ASIG operaAritmetica
+    (0) S' -> . programa
+    (1) programa -> . sentencia
+    (2) programa -> . sentencia programa
+    (3) sentencia -> . impresion
+    (4) sentencia -> . asignacion
+    (5) sentencia -> . defFuncion
+    (6) sentencia -> . funcion
+    (7) impresion -> . PRINT LPARENT parametros RPARENT
+    (8) impresion -> . PRINT LPARENT RPARENT
+    (21) asignacion -> . VARIABLE ASIG expresion
+    (9) defFuncion -> . FUNC VARIABLE LPARENT defParametros RPARENT tipo L_LLAVE cuerpoFuncion R_LLAVE
+    (16) funcion -> . VARIABLE LPARENT parametros RPARENT
+    (17) funcion -> . VARIABLE LPARENT RPARENT
 
-    VARIABLE        shift and go to state 2
+    PRINT           shift and go to state 7
+    VARIABLE        shift and go to state 8
+    FUNC            shift and go to state 9
 
-    asignacion                     shift and go to state 1
+    programa                       shift and go to state 1
+    sentencia                      shift and go to state 2
+    impresion                      shift and go to state 3
+    asignacion                     shift and go to state 4
+    defFuncion                     shift and go to state 5
+    funcion                        shift and go to state 6
 
 state 1
 
-    (0) S' -> asignacion .
+    (0) S' -> programa .
 
 
 
 state 2
 
-    (1) asignacion -> VARIABLE . ASIG operaAritmetica
+    (1) programa -> sentencia .
+    (2) programa -> sentencia . programa
+    (1) programa -> . sentencia
+    (2) programa -> . sentencia programa
+    (3) sentencia -> . impresion
+    (4) sentencia -> . asignacion
+    (5) sentencia -> . defFuncion
+    (6) sentencia -> . funcion
+    (7) impresion -> . PRINT LPARENT parametros RPARENT
+    (8) impresion -> . PRINT LPARENT RPARENT
+    (21) asignacion -> . VARIABLE ASIG expresion
+    (9) defFuncion -> . FUNC VARIABLE LPARENT defParametros RPARENT tipo L_LLAVE cuerpoFuncion R_LLAVE
+    (16) funcion -> . VARIABLE LPARENT parametros RPARENT
+    (17) funcion -> . VARIABLE LPARENT RPARENT
 
-    ASIG            shift and go to state 3
+    $end            reduce using rule 1 (programa -> sentencia .)
+    PRINT           shift and go to state 7
+    VARIABLE        shift and go to state 8
+    FUNC            shift and go to state 9
 
+    sentencia                      shift and go to state 2
+    programa                       shift and go to state 10
+    impresion                      shift and go to state 3
+    asignacion                     shift and go to state 4
+    defFuncion                     shift and go to state 5
+    funcion                        shift and go to state 6
 
 state 3
 
-    (1) asignacion -> VARIABLE ASIG . operaAritmetica
-    (2) operaAritmetica -> . valor
-    (3) operaAritmetica -> . valor operadorArit operaAritmetica
-    (4) valor -> . INTEGER
-    (5) valor -> . FLOAT
-    (6) valor -> . VARIABLE
+    (3) sentencia -> impresion .
 
-    INTEGER         shift and go to state 7
-    FLOAT           shift and go to state 8
-    VARIABLE        shift and go to state 4
+    PRINT           reduce using rule 3 (sentencia -> impresion .)
+    VARIABLE        reduce using rule 3 (sentencia -> impresion .)
+    FUNC            reduce using rule 3 (sentencia -> impresion .)
+    $end            reduce using rule 3 (sentencia -> impresion .)
+    RETURN          reduce using rule 3 (sentencia -> impresion .)
 
-    operaAritmetica                shift and go to state 5
-    valor                          shift and go to state 6
 
 state 4
 
-    (6) valor -> VARIABLE .
+    (4) sentencia -> asignacion .
 
-    PLUS            reduce using rule 6 (valor -> VARIABLE .)
-    MINUS           reduce using rule 6 (valor -> VARIABLE .)
-    MULT            reduce using rule 6 (valor -> VARIABLE .)
-    DIVIDE          reduce using rule 6 (valor -> VARIABLE .)
-    MOD             reduce using rule 6 (valor -> VARIABLE .)
-    $end            reduce using rule 6 (valor -> VARIABLE .)
+    PRINT           reduce using rule 4 (sentencia -> asignacion .)
+    VARIABLE        reduce using rule 4 (sentencia -> asignacion .)
+    FUNC            reduce using rule 4 (sentencia -> asignacion .)
+    $end            reduce using rule 4 (sentencia -> asignacion .)
+    RETURN          reduce using rule 4 (sentencia -> asignacion .)
 
 
 state 5
 
-    (1) asignacion -> VARIABLE ASIG operaAritmetica .
+    (5) sentencia -> defFuncion .
 
-    $end            reduce using rule 1 (asignacion -> VARIABLE ASIG operaAritmetica .)
+    PRINT           reduce using rule 5 (sentencia -> defFuncion .)
+    VARIABLE        reduce using rule 5 (sentencia -> defFuncion .)
+    FUNC            reduce using rule 5 (sentencia -> defFuncion .)
+    $end            reduce using rule 5 (sentencia -> defFuncion .)
+    RETURN          reduce using rule 5 (sentencia -> defFuncion .)
 
 
 state 6
 
-    (2) operaAritmetica -> valor .
-    (3) operaAritmetica -> valor . operadorArit operaAritmetica
-    (7) operadorArit -> . PLUS
-    (8) operadorArit -> . MINUS
-    (9) operadorArit -> . MULT
-    (10) operadorArit -> . DIVIDE
-    (11) operadorArit -> . MOD
+    (6) sentencia -> funcion .
 
-    $end            reduce using rule 2 (operaAritmetica -> valor .)
-    PLUS            shift and go to state 10
-    MINUS           shift and go to state 11
-    MULT            shift and go to state 12
-    DIVIDE          shift and go to state 13
-    MOD             shift and go to state 14
+    PRINT           reduce using rule 6 (sentencia -> funcion .)
+    VARIABLE        reduce using rule 6 (sentencia -> funcion .)
+    FUNC            reduce using rule 6 (sentencia -> funcion .)
+    $end            reduce using rule 6 (sentencia -> funcion .)
+    RETURN          reduce using rule 6 (sentencia -> funcion .)
 
-    operadorArit                   shift and go to state 9
 
 state 7
 
-    (4) valor -> INTEGER .
+    (7) impresion -> PRINT . LPARENT parametros RPARENT
+    (8) impresion -> PRINT . LPARENT RPARENT
 
-    PLUS            reduce using rule 4 (valor -> INTEGER .)
-    MINUS           reduce using rule 4 (valor -> INTEGER .)
-    MULT            reduce using rule 4 (valor -> INTEGER .)
-    DIVIDE          reduce using rule 4 (valor -> INTEGER .)
-    MOD             reduce using rule 4 (valor -> INTEGER .)
-    $end            reduce using rule 4 (valor -> INTEGER .)
+    LPARENT         shift and go to state 11
 
 
 state 8
 
-    (5) valor -> FLOAT .
+    (21) asignacion -> VARIABLE . ASIG expresion
+    (16) funcion -> VARIABLE . LPARENT parametros RPARENT
+    (17) funcion -> VARIABLE . LPARENT RPARENT
 
-    PLUS            reduce using rule 5 (valor -> FLOAT .)
-    MINUS           reduce using rule 5 (valor -> FLOAT .)
-    MULT            reduce using rule 5 (valor -> FLOAT .)
-    DIVIDE          reduce using rule 5 (valor -> FLOAT .)
-    MOD             reduce using rule 5 (valor -> FLOAT .)
-    $end            reduce using rule 5 (valor -> FLOAT .)
+    ASIG            shift and go to state 12
+    LPARENT         shift and go to state 13
 
 
 state 9
 
-    (3) operaAritmetica -> valor operadorArit . operaAritmetica
-    (2) operaAritmetica -> . valor
-    (3) operaAritmetica -> . valor operadorArit operaAritmetica
-    (4) valor -> . INTEGER
-    (5) valor -> . FLOAT
-    (6) valor -> . VARIABLE
+    (9) defFuncion -> FUNC . VARIABLE LPARENT defParametros RPARENT tipo L_LLAVE cuerpoFuncion R_LLAVE
 
-    INTEGER         shift and go to state 7
-    FLOAT           shift and go to state 8
-    VARIABLE        shift and go to state 4
+    VARIABLE        shift and go to state 14
 
-    valor                          shift and go to state 6
-    operaAritmetica                shift and go to state 15
 
 state 10
 
-    (7) operadorArit -> PLUS .
+    (2) programa -> sentencia programa .
 
-    INTEGER         reduce using rule 7 (operadorArit -> PLUS .)
-    FLOAT           reduce using rule 7 (operadorArit -> PLUS .)
-    VARIABLE        reduce using rule 7 (operadorArit -> PLUS .)
+    $end            reduce using rule 2 (programa -> sentencia programa .)
 
 
 state 11
 
-    (8) operadorArit -> MINUS .
+    (7) impresion -> PRINT LPARENT . parametros RPARENT
+    (8) impresion -> PRINT LPARENT . RPARENT
+    (18) parametros -> . parametro
+    (19) parametros -> . parametro COMMA parametros
+    (20) parametro -> . expresion
+    (22) expresion -> . valor
+    (23) expresion -> . valor operadorArit expresion
+    (24) valor -> . INTEGER
+    (25) valor -> . FLOAT
+    (26) valor -> . STRING
+    (27) valor -> . VARIABLE
 
-    INTEGER         reduce using rule 8 (operadorArit -> MINUS .)
-    FLOAT           reduce using rule 8 (operadorArit -> MINUS .)
-    VARIABLE        reduce using rule 8 (operadorArit -> MINUS .)
+    RPARENT         shift and go to state 16
+    INTEGER         shift and go to state 20
+    FLOAT           shift and go to state 21
+    STRING          shift and go to state 22
+    VARIABLE        shift and go to state 23
 
+    parametros                     shift and go to state 15
+    parametro                      shift and go to state 17
+    expresion                      shift and go to state 18
+    valor                          shift and go to state 19
 
 state 12
 
-    (9) operadorArit -> MULT .
+    (21) asignacion -> VARIABLE ASIG . expresion
+    (22) expresion -> . valor
+    (23) expresion -> . valor operadorArit expresion
+    (24) valor -> . INTEGER
+    (25) valor -> . FLOAT
+    (26) valor -> . STRING
+    (27) valor -> . VARIABLE
 
-    INTEGER         reduce using rule 9 (operadorArit -> MULT .)
-    FLOAT           reduce using rule 9 (operadorArit -> MULT .)
-    VARIABLE        reduce using rule 9 (operadorArit -> MULT .)
+    INTEGER         shift and go to state 20
+    FLOAT           shift and go to state 21
+    STRING          shift and go to state 22
+    VARIABLE        shift and go to state 23
 
+    expresion                      shift and go to state 24
+    valor                          shift and go to state 19
 
 state 13
 
-    (10) operadorArit -> DIVIDE .
+    (16) funcion -> VARIABLE LPARENT . parametros RPARENT
+    (17) funcion -> VARIABLE LPARENT . RPARENT
+    (18) parametros -> . parametro
+    (19) parametros -> . parametro COMMA parametros
+    (20) parametro -> . expresion
+    (22) expresion -> . valor
+    (23) expresion -> . valor operadorArit expresion
+    (24) valor -> . INTEGER
+    (25) valor -> . FLOAT
+    (26) valor -> . STRING
+    (27) valor -> . VARIABLE
 
-    INTEGER         reduce using rule 10 (operadorArit -> DIVIDE .)
-    FLOAT           reduce using rule 10 (operadorArit -> DIVIDE .)
-    VARIABLE        reduce using rule 10 (operadorArit -> DIVIDE .)
+    RPARENT         shift and go to state 26
+    INTEGER         shift and go to state 20
+    FLOAT           shift and go to state 21
+    STRING          shift and go to state 22
+    VARIABLE        shift and go to state 23
 
+    parametros                     shift and go to state 25
+    parametro                      shift and go to state 17
+    expresion                      shift and go to state 18
+    valor                          shift and go to state 19
 
 state 14
 
-    (11) operadorArit -> MOD .
+    (9) defFuncion -> FUNC VARIABLE . LPARENT defParametros RPARENT tipo L_LLAVE cuerpoFuncion R_LLAVE
 
-    INTEGER         reduce using rule 11 (operadorArit -> MOD .)
-    FLOAT           reduce using rule 11 (operadorArit -> MOD .)
-    VARIABLE        reduce using rule 11 (operadorArit -> MOD .)
+    LPARENT         shift and go to state 27
 
 
 state 15
 
-    (3) operaAritmetica -> valor operadorArit operaAritmetica .
+    (7) impresion -> PRINT LPARENT parametros . RPARENT
 
-    $end            reduce using rule 3 (operaAritmetica -> valor operadorArit operaAritmetica .)
+    RPARENT         shift and go to state 28
+
+
+state 16
+
+    (8) impresion -> PRINT LPARENT RPARENT .
+
+    PRINT           reduce using rule 8 (impresion -> PRINT LPARENT RPARENT .)
+    VARIABLE        reduce using rule 8 (impresion -> PRINT LPARENT RPARENT .)
+    FUNC            reduce using rule 8 (impresion -> PRINT LPARENT RPARENT .)
+    $end            reduce using rule 8 (impresion -> PRINT LPARENT RPARENT .)
+    RETURN          reduce using rule 8 (impresion -> PRINT LPARENT RPARENT .)
+
+
+state 17
+
+    (18) parametros -> parametro .
+    (19) parametros -> parametro . COMMA parametros
+
+    RPARENT         reduce using rule 18 (parametros -> parametro .)
+    COMMA           shift and go to state 29
+
+
+state 18
+
+    (20) parametro -> expresion .
+
+    COMMA           reduce using rule 20 (parametro -> expresion .)
+    RPARENT         reduce using rule 20 (parametro -> expresion .)
+
+
+state 19
+
+    (22) expresion -> valor .
+    (23) expresion -> valor . operadorArit expresion
+    (42) operadorArit -> . PLUS
+    (43) operadorArit -> . MINUS
+    (44) operadorArit -> . MULT
+    (45) operadorArit -> . DIVIDE
+    (46) operadorArit -> . MOD
+
+    COMMA           reduce using rule 22 (expresion -> valor .)
+    RPARENT         reduce using rule 22 (expresion -> valor .)
+    PRINT           reduce using rule 22 (expresion -> valor .)
+    VARIABLE        reduce using rule 22 (expresion -> valor .)
+    FUNC            reduce using rule 22 (expresion -> valor .)
+    $end            reduce using rule 22 (expresion -> valor .)
+    RETURN          reduce using rule 22 (expresion -> valor .)
+    R_LLAVE         reduce using rule 22 (expresion -> valor .)
+    PLUS            shift and go to state 31
+    MINUS           shift and go to state 32
+    MULT            shift and go to state 33
+    DIVIDE          shift and go to state 34
+    MOD             shift and go to state 35
+
+    operadorArit                   shift and go to state 30
+
+state 20
+
+    (24) valor -> INTEGER .
+
+    PLUS            reduce using rule 24 (valor -> INTEGER .)
+    MINUS           reduce using rule 24 (valor -> INTEGER .)
+    MULT            reduce using rule 24 (valor -> INTEGER .)
+    DIVIDE          reduce using rule 24 (valor -> INTEGER .)
+    MOD             reduce using rule 24 (valor -> INTEGER .)
+    COMMA           reduce using rule 24 (valor -> INTEGER .)
+    RPARENT         reduce using rule 24 (valor -> INTEGER .)
+    PRINT           reduce using rule 24 (valor -> INTEGER .)
+    VARIABLE        reduce using rule 24 (valor -> INTEGER .)
+    FUNC            reduce using rule 24 (valor -> INTEGER .)
+    $end            reduce using rule 24 (valor -> INTEGER .)
+    RETURN          reduce using rule 24 (valor -> INTEGER .)
+    R_LLAVE         reduce using rule 24 (valor -> INTEGER .)
+
+
+state 21
+
+    (25) valor -> FLOAT .
+
+    PLUS            reduce using rule 25 (valor -> FLOAT .)
+    MINUS           reduce using rule 25 (valor -> FLOAT .)
+    MULT            reduce using rule 25 (valor -> FLOAT .)
+    DIVIDE          reduce using rule 25 (valor -> FLOAT .)
+    MOD             reduce using rule 25 (valor -> FLOAT .)
+    COMMA           reduce using rule 25 (valor -> FLOAT .)
+    RPARENT         reduce using rule 25 (valor -> FLOAT .)
+    PRINT           reduce using rule 25 (valor -> FLOAT .)
+    VARIABLE        reduce using rule 25 (valor -> FLOAT .)
+    FUNC            reduce using rule 25 (valor -> FLOAT .)
+    $end            reduce using rule 25 (valor -> FLOAT .)
+    RETURN          reduce using rule 25 (valor -> FLOAT .)
+    R_LLAVE         reduce using rule 25 (valor -> FLOAT .)
+
+
+state 22
+
+    (26) valor -> STRING .
+
+    PLUS            reduce using rule 26 (valor -> STRING .)
+    MINUS           reduce using rule 26 (valor -> STRING .)
+    MULT            reduce using rule 26 (valor -> STRING .)
+    DIVIDE          reduce using rule 26 (valor -> STRING .)
+    MOD             reduce using rule 26 (valor -> STRING .)
+    COMMA           reduce using rule 26 (valor -> STRING .)
+    RPARENT         reduce using rule 26 (valor -> STRING .)
+    PRINT           reduce using rule 26 (valor -> STRING .)
+    VARIABLE        reduce using rule 26 (valor -> STRING .)
+    FUNC            reduce using rule 26 (valor -> STRING .)
+    $end            reduce using rule 26 (valor -> STRING .)
+    RETURN          reduce using rule 26 (valor -> STRING .)
+    R_LLAVE         reduce using rule 26 (valor -> STRING .)
+
+
+state 23
+
+    (27) valor -> VARIABLE .
+
+    PLUS            reduce using rule 27 (valor -> VARIABLE .)
+    MINUS           reduce using rule 27 (valor -> VARIABLE .)
+    MULT            reduce using rule 27 (valor -> VARIABLE .)
+    DIVIDE          reduce using rule 27 (valor -> VARIABLE .)
+    MOD             reduce using rule 27 (valor -> VARIABLE .)
+    COMMA           reduce using rule 27 (valor -> VARIABLE .)
+    RPARENT         reduce using rule 27 (valor -> VARIABLE .)
+    PRINT           reduce using rule 27 (valor -> VARIABLE .)
+    VARIABLE        reduce using rule 27 (valor -> VARIABLE .)
+    FUNC            reduce using rule 27 (valor -> VARIABLE .)
+    $end            reduce using rule 27 (valor -> VARIABLE .)
+    RETURN          reduce using rule 27 (valor -> VARIABLE .)
+    R_LLAVE         reduce using rule 27 (valor -> VARIABLE .)
+
+
+state 24
+
+    (21) asignacion -> VARIABLE ASIG expresion .
+
+    PRINT           reduce using rule 21 (asignacion -> VARIABLE ASIG expresion .)
+    VARIABLE        reduce using rule 21 (asignacion -> VARIABLE ASIG expresion .)
+    FUNC            reduce using rule 21 (asignacion -> VARIABLE ASIG expresion .)
+    $end            reduce using rule 21 (asignacion -> VARIABLE ASIG expresion .)
+    RETURN          reduce using rule 21 (asignacion -> VARIABLE ASIG expresion .)
+
+
+state 25
+
+    (16) funcion -> VARIABLE LPARENT parametros . RPARENT
+
+    RPARENT         shift and go to state 36
+
+
+state 26
+
+    (17) funcion -> VARIABLE LPARENT RPARENT .
+
+    PRINT           reduce using rule 17 (funcion -> VARIABLE LPARENT RPARENT .)
+    VARIABLE        reduce using rule 17 (funcion -> VARIABLE LPARENT RPARENT .)
+    FUNC            reduce using rule 17 (funcion -> VARIABLE LPARENT RPARENT .)
+    $end            reduce using rule 17 (funcion -> VARIABLE LPARENT RPARENT .)
+    RETURN          reduce using rule 17 (funcion -> VARIABLE LPARENT RPARENT .)
+
+
+state 27
+
+    (9) defFuncion -> FUNC VARIABLE LPARENT . defParametros RPARENT tipo L_LLAVE cuerpoFuncion R_LLAVE
+    (10) defParametros -> . defParametro
+    (11) defParametros -> . defParametro COMMA defParametros
+    (12) defParametro -> . VARIABLE tipo
+
+    VARIABLE        shift and go to state 37
+
+    defParametros                  shift and go to state 38
+    defParametro                   shift and go to state 39
+
+state 28
+
+    (7) impresion -> PRINT LPARENT parametros RPARENT .
+
+    PRINT           reduce using rule 7 (impresion -> PRINT LPARENT parametros RPARENT .)
+    VARIABLE        reduce using rule 7 (impresion -> PRINT LPARENT parametros RPARENT .)
+    FUNC            reduce using rule 7 (impresion -> PRINT LPARENT parametros RPARENT .)
+    $end            reduce using rule 7 (impresion -> PRINT LPARENT parametros RPARENT .)
+    RETURN          reduce using rule 7 (impresion -> PRINT LPARENT parametros RPARENT .)
+
+
+state 29
+
+    (19) parametros -> parametro COMMA . parametros
+    (18) parametros -> . parametro
+    (19) parametros -> . parametro COMMA parametros
+    (20) parametro -> . expresion
+    (22) expresion -> . valor
+    (23) expresion -> . valor operadorArit expresion
+    (24) valor -> . INTEGER
+    (25) valor -> . FLOAT
+    (26) valor -> . STRING
+    (27) valor -> . VARIABLE
+
+    INTEGER         shift and go to state 20
+    FLOAT           shift and go to state 21
+    STRING          shift and go to state 22
+    VARIABLE        shift and go to state 23
+
+    parametro                      shift and go to state 17
+    parametros                     shift and go to state 40
+    expresion                      shift and go to state 18
+    valor                          shift and go to state 19
+
+state 30
+
+    (23) expresion -> valor operadorArit . expresion
+    (22) expresion -> . valor
+    (23) expresion -> . valor operadorArit expresion
+    (24) valor -> . INTEGER
+    (25) valor -> . FLOAT
+    (26) valor -> . STRING
+    (27) valor -> . VARIABLE
+
+    INTEGER         shift and go to state 20
+    FLOAT           shift and go to state 21
+    STRING          shift and go to state 22
+    VARIABLE        shift and go to state 23
+
+    valor                          shift and go to state 19
+    expresion                      shift and go to state 41
+
+state 31
+
+    (42) operadorArit -> PLUS .
+
+    INTEGER         reduce using rule 42 (operadorArit -> PLUS .)
+    FLOAT           reduce using rule 42 (operadorArit -> PLUS .)
+    STRING          reduce using rule 42 (operadorArit -> PLUS .)
+    VARIABLE        reduce using rule 42 (operadorArit -> PLUS .)
+
+
+state 32
+
+    (43) operadorArit -> MINUS .
+
+    INTEGER         reduce using rule 43 (operadorArit -> MINUS .)
+    FLOAT           reduce using rule 43 (operadorArit -> MINUS .)
+    STRING          reduce using rule 43 (operadorArit -> MINUS .)
+    VARIABLE        reduce using rule 43 (operadorArit -> MINUS .)
+
+
+state 33
+
+    (44) operadorArit -> MULT .
+
+    INTEGER         reduce using rule 44 (operadorArit -> MULT .)
+    FLOAT           reduce using rule 44 (operadorArit -> MULT .)
+    STRING          reduce using rule 44 (operadorArit -> MULT .)
+    VARIABLE        reduce using rule 44 (operadorArit -> MULT .)
+
+
+state 34
+
+    (45) operadorArit -> DIVIDE .
+
+    INTEGER         reduce using rule 45 (operadorArit -> DIVIDE .)
+    FLOAT           reduce using rule 45 (operadorArit -> DIVIDE .)
+    STRING          reduce using rule 45 (operadorArit -> DIVIDE .)
+    VARIABLE        reduce using rule 45 (operadorArit -> DIVIDE .)
+
+
+state 35
+
+    (46) operadorArit -> MOD .
+
+    INTEGER         reduce using rule 46 (operadorArit -> MOD .)
+    FLOAT           reduce using rule 46 (operadorArit -> MOD .)
+    STRING          reduce using rule 46 (operadorArit -> MOD .)
+    VARIABLE        reduce using rule 46 (operadorArit -> MOD .)
+
+
+state 36
+
+    (16) funcion -> VARIABLE LPARENT parametros RPARENT .
+
+    PRINT           reduce using rule 16 (funcion -> VARIABLE LPARENT parametros RPARENT .)
+    VARIABLE        reduce using rule 16 (funcion -> VARIABLE LPARENT parametros RPARENT .)
+    FUNC            reduce using rule 16 (funcion -> VARIABLE LPARENT parametros RPARENT .)
+    $end            reduce using rule 16 (funcion -> VARIABLE LPARENT parametros RPARENT .)
+    RETURN          reduce using rule 16 (funcion -> VARIABLE LPARENT parametros RPARENT .)
+
+
+state 37
+
+    (12) defParametro -> VARIABLE . tipo
+    (28) tipo -> . INT
+    (29) tipo -> . INT16
+    (30) tipo -> . INT32
+    (31) tipo -> . INT64
+    (32) tipo -> . UINT
+    (33) tipo -> . UINT16
+    (34) tipo -> . UINT32
+    (35) tipo -> . UINT64
+    (36) tipo -> . BOOL
+    (37) tipo -> . FLOAT32
+    (38) tipo -> . FLOAT64
+    (39) tipo -> . COMPLEX64
+    (40) tipo -> . COMPLEX128
+    (41) tipo -> . STRING
+
+    INT             shift and go to state 43
+    INT16           shift and go to state 44
+    INT32           shift and go to state 45
+    INT64           shift and go to state 46
+    UINT            shift and go to state 47
+    UINT16          shift and go to state 48
+    UINT32          shift and go to state 49
+    UINT64          shift and go to state 50
+    BOOL            shift and go to state 51
+    FLOAT32         shift and go to state 52
+    FLOAT64         shift and go to state 53
+    COMPLEX64       shift and go to state 54
+    COMPLEX128      shift and go to state 55
+    STRING          shift and go to state 56
+
+    tipo                           shift and go to state 42
+
+state 38
+
+    (9) defFuncion -> FUNC VARIABLE LPARENT defParametros . RPARENT tipo L_LLAVE cuerpoFuncion R_LLAVE
+
+    RPARENT         shift and go to state 57
+
+
+state 39
+
+    (10) defParametros -> defParametro .
+    (11) defParametros -> defParametro . COMMA defParametros
+
+    RPARENT         reduce using rule 10 (defParametros -> defParametro .)
+    COMMA           shift and go to state 58
+
+
+state 40
+
+    (19) parametros -> parametro COMMA parametros .
+
+    RPARENT         reduce using rule 19 (parametros -> parametro COMMA parametros .)
+
+
+state 41
+
+    (23) expresion -> valor operadorArit expresion .
+
+    COMMA           reduce using rule 23 (expresion -> valor operadorArit expresion .)
+    RPARENT         reduce using rule 23 (expresion -> valor operadorArit expresion .)
+    PRINT           reduce using rule 23 (expresion -> valor operadorArit expresion .)
+    VARIABLE        reduce using rule 23 (expresion -> valor operadorArit expresion .)
+    FUNC            reduce using rule 23 (expresion -> valor operadorArit expresion .)
+    $end            reduce using rule 23 (expresion -> valor operadorArit expresion .)
+    RETURN          reduce using rule 23 (expresion -> valor operadorArit expresion .)
+    R_LLAVE         reduce using rule 23 (expresion -> valor operadorArit expresion .)
+
+
+state 42
+
+    (12) defParametro -> VARIABLE tipo .
+
+    COMMA           reduce using rule 12 (defParametro -> VARIABLE tipo .)
+    RPARENT         reduce using rule 12 (defParametro -> VARIABLE tipo .)
+
+
+state 43
+
+    (28) tipo -> INT .
+
+    COMMA           reduce using rule 28 (tipo -> INT .)
+    RPARENT         reduce using rule 28 (tipo -> INT .)
+    L_LLAVE         reduce using rule 28 (tipo -> INT .)
+
+
+state 44
+
+    (29) tipo -> INT16 .
+
+    COMMA           reduce using rule 29 (tipo -> INT16 .)
+    RPARENT         reduce using rule 29 (tipo -> INT16 .)
+    L_LLAVE         reduce using rule 29 (tipo -> INT16 .)
+
+
+state 45
+
+    (30) tipo -> INT32 .
+
+    COMMA           reduce using rule 30 (tipo -> INT32 .)
+    RPARENT         reduce using rule 30 (tipo -> INT32 .)
+    L_LLAVE         reduce using rule 30 (tipo -> INT32 .)
+
+
+state 46
+
+    (31) tipo -> INT64 .
+
+    COMMA           reduce using rule 31 (tipo -> INT64 .)
+    RPARENT         reduce using rule 31 (tipo -> INT64 .)
+    L_LLAVE         reduce using rule 31 (tipo -> INT64 .)
+
+
+state 47
+
+    (32) tipo -> UINT .
+
+    COMMA           reduce using rule 32 (tipo -> UINT .)
+    RPARENT         reduce using rule 32 (tipo -> UINT .)
+    L_LLAVE         reduce using rule 32 (tipo -> UINT .)
+
+
+state 48
+
+    (33) tipo -> UINT16 .
+
+    COMMA           reduce using rule 33 (tipo -> UINT16 .)
+    RPARENT         reduce using rule 33 (tipo -> UINT16 .)
+    L_LLAVE         reduce using rule 33 (tipo -> UINT16 .)
+
+
+state 49
+
+    (34) tipo -> UINT32 .
+
+    COMMA           reduce using rule 34 (tipo -> UINT32 .)
+    RPARENT         reduce using rule 34 (tipo -> UINT32 .)
+    L_LLAVE         reduce using rule 34 (tipo -> UINT32 .)
+
+
+state 50
+
+    (35) tipo -> UINT64 .
+
+    COMMA           reduce using rule 35 (tipo -> UINT64 .)
+    RPARENT         reduce using rule 35 (tipo -> UINT64 .)
+    L_LLAVE         reduce using rule 35 (tipo -> UINT64 .)
+
+
+state 51
+
+    (36) tipo -> BOOL .
+
+    COMMA           reduce using rule 36 (tipo -> BOOL .)
+    RPARENT         reduce using rule 36 (tipo -> BOOL .)
+    L_LLAVE         reduce using rule 36 (tipo -> BOOL .)
+
+
+state 52
+
+    (37) tipo -> FLOAT32 .
+
+    COMMA           reduce using rule 37 (tipo -> FLOAT32 .)
+    RPARENT         reduce using rule 37 (tipo -> FLOAT32 .)
+    L_LLAVE         reduce using rule 37 (tipo -> FLOAT32 .)
+
+
+state 53
+
+    (38) tipo -> FLOAT64 .
+
+    COMMA           reduce using rule 38 (tipo -> FLOAT64 .)
+    RPARENT         reduce using rule 38 (tipo -> FLOAT64 .)
+    L_LLAVE         reduce using rule 38 (tipo -> FLOAT64 .)
+
+
+state 54
+
+    (39) tipo -> COMPLEX64 .
+
+    COMMA           reduce using rule 39 (tipo -> COMPLEX64 .)
+    RPARENT         reduce using rule 39 (tipo -> COMPLEX64 .)
+    L_LLAVE         reduce using rule 39 (tipo -> COMPLEX64 .)
+
+
+state 55
+
+    (40) tipo -> COMPLEX128 .
+
+    COMMA           reduce using rule 40 (tipo -> COMPLEX128 .)
+    RPARENT         reduce using rule 40 (tipo -> COMPLEX128 .)
+    L_LLAVE         reduce using rule 40 (tipo -> COMPLEX128 .)
+
+
+state 56
+
+    (41) tipo -> STRING .
+
+    COMMA           reduce using rule 41 (tipo -> STRING .)
+    RPARENT         reduce using rule 41 (tipo -> STRING .)
+    L_LLAVE         reduce using rule 41 (tipo -> STRING .)
+
+
+state 57
+
+    (9) defFuncion -> FUNC VARIABLE LPARENT defParametros RPARENT . tipo L_LLAVE cuerpoFuncion R_LLAVE
+    (28) tipo -> . INT
+    (29) tipo -> . INT16
+    (30) tipo -> . INT32
+    (31) tipo -> . INT64
+    (32) tipo -> . UINT
+    (33) tipo -> . UINT16
+    (34) tipo -> . UINT32
+    (35) tipo -> . UINT64
+    (36) tipo -> . BOOL
+    (37) tipo -> . FLOAT32
+    (38) tipo -> . FLOAT64
+    (39) tipo -> . COMPLEX64
+    (40) tipo -> . COMPLEX128
+    (41) tipo -> . STRING
+
+    INT             shift and go to state 43
+    INT16           shift and go to state 44
+    INT32           shift and go to state 45
+    INT64           shift and go to state 46
+    UINT            shift and go to state 47
+    UINT16          shift and go to state 48
+    UINT32          shift and go to state 49
+    UINT64          shift and go to state 50
+    BOOL            shift and go to state 51
+    FLOAT32         shift and go to state 52
+    FLOAT64         shift and go to state 53
+    COMPLEX64       shift and go to state 54
+    COMPLEX128      shift and go to state 55
+    STRING          shift and go to state 56
+
+    tipo                           shift and go to state 59
+
+state 58
+
+    (11) defParametros -> defParametro COMMA . defParametros
+    (10) defParametros -> . defParametro
+    (11) defParametros -> . defParametro COMMA defParametros
+    (12) defParametro -> . VARIABLE tipo
+
+    VARIABLE        shift and go to state 37
+
+    defParametro                   shift and go to state 39
+    defParametros                  shift and go to state 60
+
+state 59
+
+    (9) defFuncion -> FUNC VARIABLE LPARENT defParametros RPARENT tipo . L_LLAVE cuerpoFuncion R_LLAVE
+
+    L_LLAVE         shift and go to state 61
+
+
+state 60
+
+    (11) defParametros -> defParametro COMMA defParametros .
+
+    RPARENT         reduce using rule 11 (defParametros -> defParametro COMMA defParametros .)
+
+
+state 61
+
+    (9) defFuncion -> FUNC VARIABLE LPARENT defParametros RPARENT tipo L_LLAVE . cuerpoFuncion R_LLAVE
+    (13) cuerpoFuncion -> . retorno
+    (14) cuerpoFuncion -> . sentencia cuerpoFuncion
+    (15) retorno -> . RETURN expresion
+    (3) sentencia -> . impresion
+    (4) sentencia -> . asignacion
+    (5) sentencia -> . defFuncion
+    (6) sentencia -> . funcion
+    (7) impresion -> . PRINT LPARENT parametros RPARENT
+    (8) impresion -> . PRINT LPARENT RPARENT
+    (21) asignacion -> . VARIABLE ASIG expresion
+    (9) defFuncion -> . FUNC VARIABLE LPARENT defParametros RPARENT tipo L_LLAVE cuerpoFuncion R_LLAVE
+    (16) funcion -> . VARIABLE LPARENT parametros RPARENT
+    (17) funcion -> . VARIABLE LPARENT RPARENT
+
+    RETURN          shift and go to state 65
+    PRINT           shift and go to state 7
+    VARIABLE        shift and go to state 8
+    FUNC            shift and go to state 9
+
+    cuerpoFuncion                  shift and go to state 62
+    retorno                        shift and go to state 63
+    sentencia                      shift and go to state 64
+    impresion                      shift and go to state 3
+    asignacion                     shift and go to state 4
+    defFuncion                     shift and go to state 5
+    funcion                        shift and go to state 6
+
+state 62
+
+    (9) defFuncion -> FUNC VARIABLE LPARENT defParametros RPARENT tipo L_LLAVE cuerpoFuncion . R_LLAVE
+
+    R_LLAVE         shift and go to state 66
+
+
+state 63
+
+    (13) cuerpoFuncion -> retorno .
+
+    R_LLAVE         reduce using rule 13 (cuerpoFuncion -> retorno .)
+
+
+state 64
+
+    (14) cuerpoFuncion -> sentencia . cuerpoFuncion
+    (13) cuerpoFuncion -> . retorno
+    (14) cuerpoFuncion -> . sentencia cuerpoFuncion
+    (15) retorno -> . RETURN expresion
+    (3) sentencia -> . impresion
+    (4) sentencia -> . asignacion
+    (5) sentencia -> . defFuncion
+    (6) sentencia -> . funcion
+    (7) impresion -> . PRINT LPARENT parametros RPARENT
+    (8) impresion -> . PRINT LPARENT RPARENT
+    (21) asignacion -> . VARIABLE ASIG expresion
+    (9) defFuncion -> . FUNC VARIABLE LPARENT defParametros RPARENT tipo L_LLAVE cuerpoFuncion R_LLAVE
+    (16) funcion -> . VARIABLE LPARENT parametros RPARENT
+    (17) funcion -> . VARIABLE LPARENT RPARENT
+
+    RETURN          shift and go to state 65
+    PRINT           shift and go to state 7
+    VARIABLE        shift and go to state 8
+    FUNC            shift and go to state 9
+
+    sentencia                      shift and go to state 64
+    cuerpoFuncion                  shift and go to state 67
+    retorno                        shift and go to state 63
+    impresion                      shift and go to state 3
+    asignacion                     shift and go to state 4
+    defFuncion                     shift and go to state 5
+    funcion                        shift and go to state 6
+
+state 65
+
+    (15) retorno -> RETURN . expresion
+    (22) expresion -> . valor
+    (23) expresion -> . valor operadorArit expresion
+    (24) valor -> . INTEGER
+    (25) valor -> . FLOAT
+    (26) valor -> . STRING
+    (27) valor -> . VARIABLE
+
+    INTEGER         shift and go to state 20
+    FLOAT           shift and go to state 21
+    STRING          shift and go to state 22
+    VARIABLE        shift and go to state 23
+
+    expresion                      shift and go to state 68
+    valor                          shift and go to state 19
+
+state 66
+
+    (9) defFuncion -> FUNC VARIABLE LPARENT defParametros RPARENT tipo L_LLAVE cuerpoFuncion R_LLAVE .
+
+    PRINT           reduce using rule 9 (defFuncion -> FUNC VARIABLE LPARENT defParametros RPARENT tipo L_LLAVE cuerpoFuncion R_LLAVE .)
+    VARIABLE        reduce using rule 9 (defFuncion -> FUNC VARIABLE LPARENT defParametros RPARENT tipo L_LLAVE cuerpoFuncion R_LLAVE .)
+    FUNC            reduce using rule 9 (defFuncion -> FUNC VARIABLE LPARENT defParametros RPARENT tipo L_LLAVE cuerpoFuncion R_LLAVE .)
+    $end            reduce using rule 9 (defFuncion -> FUNC VARIABLE LPARENT defParametros RPARENT tipo L_LLAVE cuerpoFuncion R_LLAVE .)
+    RETURN          reduce using rule 9 (defFuncion -> FUNC VARIABLE LPARENT defParametros RPARENT tipo L_LLAVE cuerpoFuncion R_LLAVE .)
+
+
+state 67
+
+    (14) cuerpoFuncion -> sentencia cuerpoFuncion .
+
+    R_LLAVE         reduce using rule 14 (cuerpoFuncion -> sentencia cuerpoFuncion .)
+
+
+state 68
+
+    (15) retorno -> RETURN expresion .
+
+    R_LLAVE         reduce using rule 15 (retorno -> RETURN expresion .)
 

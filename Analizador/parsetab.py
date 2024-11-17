@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ASIG BOOL BREAK CADENA CASE COMA COMILLA COMILLA_SIMPLE COMMENT_BLOCK COMMENT_LINE COMPLEX128 COMPLEX64 CONST CONTINUE DEFAULT DIVIDE DOS_PUNTOS ELSE EQ FALSE FLOAT FLOAT32 FLOAT64 FMT FOR FUNC IF IGUAL IMPORT INT INT16 INT32 INT64 INTEGER INTERFACE LCORCH LPARENT L_LLAVE MAP MAYOR_QUE MENOR_QUE MINUS MOD MULT PACKAGE PLACEHOLDER PLUS PRINT PRINTLN PUNTO PUNTO_Y_COMA RANGE RCORCH RPARENT R_LLAVE SEPARADOR SPRINTF STRING STRUCT SWITCH TRUE TYPE UINT UINT16 UINT32 UINT64 VAR VARIABLE returnasignacion : VARIABLE ASIG operaAritmeticaoperaAritmetica : valor\n| valor operadorArit operaAritmeticavalor : INTEGER\n| FLOAT\n| VARIABLEoperadorArit : PLUS\n| MINUS\n| MULT\n| DIVIDE\n| MOD '
+_lr_signature = 'ASIG BOOL BREAK CADENA CASE COMILLA COMILLA_SIMPLE COMMA COMMENT_BLOCK COMMENT_LINE COMPLEX128 COMPLEX64 CONST CONTINUE DEFAULT DIVIDE DOS_PUNTOS ELSE EQ FALSE FLOAT FLOAT32 FLOAT64 FMT FOR FUNC IF IGUAL IMPORT INT INT16 INT32 INT64 INTEGER INTERFACE LCORCH LPARENT L_LLAVE MAP MAYOR_QUE MENOR_QUE MINUS MOD MULT PACKAGE PLACEHOLDER PLUS PRINT PRINTLN PUNTO PUNTO_Y_COMA RANGE RCORCH RETURN RPARENT R_LLAVE SEPARADOR SPRINTF STRING STRUCT SWITCH TRUE TYPE UINT UINT16 UINT32 UINT64 VAR VARIABLEprograma : sentencia\n                | sentencia programasentencia : impresion\n                | asignacion\n                | defFuncion\n                | funcionimpresion : PRINT LPARENT parametros RPARENT\n                | PRINT LPARENT RPARENTdefFuncion : FUNC VARIABLE LPARENT defParametros RPARENT tipo L_LLAVE cuerpoFuncion R_LLAVEdefParametros : defParametro\n                | defParametro COMMA defParametrosdefParametro : VARIABLE tipocuerpoFuncion : retorno\n                | sentencia cuerpoFuncionretorno : RETURN expresionfuncion : VARIABLE LPARENT parametros RPARENT\n                | VARIABLE LPARENT RPARENTparametros : parametro\n                | parametro COMMA parametrosparametro : expresionasignacion : VARIABLE ASIG expresionexpresion : valor\n                | valor operadorArit expresionvalor : INTEGER\n                | FLOAT\n                | STRING\n                | VARIABLEtipo : INT\n            | INT16\n            | INT32\n            | INT64\n            | UINT\n            | UINT16\n            | UINT32\n            | UINT64\n            | BOOL\n            | FLOAT32\n            | FLOAT64\n            | COMPLEX64\n            | COMPLEX128\n            | STRING\n            operadorArit : PLUS\n                | MINUS\n                | MULT\n                | DIVIDE\n                | MOD operadorMat : EQ\n                | MENOR_QUE\n                | MAYOR_QUE\n                '
     
-_lr_action_items = {'VARIABLE':([0,3,9,10,11,12,13,14,],[2,4,4,-7,-8,-9,-10,-11,]),'$end':([1,4,5,6,7,8,15,],[0,-6,-1,-2,-4,-5,-3,]),'ASIG':([2,],[3,]),'INTEGER':([3,9,10,11,12,13,14,],[7,7,-7,-8,-9,-10,-11,]),'FLOAT':([3,9,10,11,12,13,14,],[8,8,-7,-8,-9,-10,-11,]),'PLUS':([4,6,7,8,],[-6,10,-4,-5,]),'MINUS':([4,6,7,8,],[-6,11,-4,-5,]),'MULT':([4,6,7,8,],[-6,12,-4,-5,]),'DIVIDE':([4,6,7,8,],[-6,13,-4,-5,]),'MOD':([4,6,7,8,],[-6,14,-4,-5,]),}
+_lr_action_items = {'PRINT':([0,2,3,4,5,6,16,19,20,21,22,23,24,26,28,36,41,61,64,66,],[7,7,-3,-4,-5,-6,-8,-22,-24,-25,-26,-27,-21,-17,-7,-16,-23,7,7,-9,]),'VARIABLE':([0,2,3,4,5,6,9,11,12,13,16,19,20,21,22,23,24,26,27,28,29,30,31,32,33,34,35,36,41,58,61,64,65,66,],[8,8,-3,-4,-5,-6,14,23,23,23,-8,-22,-24,-25,-26,-27,-21,-17,37,-7,23,23,-42,-43,-44,-45,-46,-16,-23,37,8,8,23,-9,]),'FUNC':([0,2,3,4,5,6,16,19,20,21,22,23,24,26,28,36,41,61,64,66,],[9,9,-3,-4,-5,-6,-8,-22,-24,-25,-26,-27,-21,-17,-7,-16,-23,9,9,-9,]),'$end':([1,2,3,4,5,6,10,16,19,20,21,22,23,24,26,28,36,41,66,],[0,-1,-3,-4,-5,-6,-2,-8,-22,-24,-25,-26,-27,-21,-17,-7,-16,-23,-9,]),'RETURN':([3,4,5,6,16,19,20,21,22,23,24,26,28,36,41,61,64,66,],[-3,-4,-5,-6,-8,-22,-24,-25,-26,-27,-21,-17,-7,-16,-23,65,65,-9,]),'LPARENT':([7,8,14,],[11,13,27,]),'ASIG':([8,],[12,]),'RPARENT':([11,13,15,17,18,19,20,21,22,23,25,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,60,],[16,26,28,-18,-20,-22,-24,-25,-26,-27,36,57,-10,-19,-23,-12,-28,-29,-30,-31,-32,-33,-34,-35,-36,-37,-38,-39,-40,-41,-11,]),'INTEGER':([11,12,13,29,30,31,32,33,34,35,65,],[20,20,20,20,20,-42,-43,-44,-45,-46,20,]),'FLOAT':([11,12,13,29,30,31,32,33,34,35,65,],[21,21,21,21,21,-42,-43,-44,-45,-46,21,]),'STRING':([11,12,13,29,30,31,32,33,34,35,37,57,65,],[22,22,22,22,22,-42,-43,-44,-45,-46,56,56,22,]),'COMMA':([17,18,19,20,21,22,23,39,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,],[29,-20,-22,-24,-25,-26,-27,58,-23,-12,-28,-29,-30,-31,-32,-33,-34,-35,-36,-37,-38,-39,-40,-41,]),'R_LLAVE':([19,20,21,22,23,41,62,63,67,68,],[-22,-24,-25,-26,-27,-23,66,-13,-14,-15,]),'PLUS':([19,20,21,22,23,],[31,-24,-25,-26,-27,]),'MINUS':([19,20,21,22,23,],[32,-24,-25,-26,-27,]),'MULT':([19,20,21,22,23,],[33,-24,-25,-26,-27,]),'DIVIDE':([19,20,21,22,23,],[34,-24,-25,-26,-27,]),'MOD':([19,20,21,22,23,],[35,-24,-25,-26,-27,]),'INT':([37,57,],[43,43,]),'INT16':([37,57,],[44,44,]),'INT32':([37,57,],[45,45,]),'INT64':([37,57,],[46,46,]),'UINT':([37,57,],[47,47,]),'UINT16':([37,57,],[48,48,]),'UINT32':([37,57,],[49,49,]),'UINT64':([37,57,],[50,50,]),'BOOL':([37,57,],[51,51,]),'FLOAT32':([37,57,],[52,52,]),'FLOAT64':([37,57,],[53,53,]),'COMPLEX64':([37,57,],[54,54,]),'COMPLEX128':([37,57,],[55,55,]),'L_LLAVE':([43,44,45,46,47,48,49,50,51,52,53,54,55,56,59,],[-28,-29,-30,-31,-32,-33,-34,-35,-36,-37,-38,-39,-40,-41,61,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'asignacion':([0,],[1,]),'operaAritmetica':([3,9,],[5,15,]),'valor':([3,9,],[6,6,]),'operadorArit':([6,],[9,]),}
+_lr_goto_items = {'programa':([0,2,],[1,10,]),'sentencia':([0,2,61,64,],[2,2,64,64,]),'impresion':([0,2,61,64,],[3,3,3,3,]),'asignacion':([0,2,61,64,],[4,4,4,4,]),'defFuncion':([0,2,61,64,],[5,5,5,5,]),'funcion':([0,2,61,64,],[6,6,6,6,]),'parametros':([11,13,29,],[15,25,40,]),'parametro':([11,13,29,],[17,17,17,]),'expresion':([11,12,13,29,30,65,],[18,24,18,18,41,68,]),'valor':([11,12,13,29,30,65,],[19,19,19,19,19,19,]),'operadorArit':([19,],[30,]),'defParametros':([27,58,],[38,60,]),'defParametro':([27,58,],[39,39,]),'tipo':([37,57,],[42,59,]),'cuerpoFuncion':([61,64,],[62,67,]),'retorno':([61,64,],[63,63,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,16 +26,54 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> asignacion","S'",1,None,None,None),
-  ('asignacion -> VARIABLE ASIG operaAritmetica','asignacion',3,'p_asignacion','main.py',15),
-  ('operaAritmetica -> valor','operaAritmetica',1,'p_operaAritmetica','main.py',18),
-  ('operaAritmetica -> valor operadorArit operaAritmetica','operaAritmetica',3,'p_operaAritmetica','main.py',19),
-  ('valor -> INTEGER','valor',1,'p_valor','main.py',23),
-  ('valor -> FLOAT','valor',1,'p_valor','main.py',24),
-  ('valor -> VARIABLE','valor',1,'p_valor','main.py',25),
-  ('operadorArit -> PLUS','operadorArit',1,'p_operadorArit','main.py',27),
-  ('operadorArit -> MINUS','operadorArit',1,'p_operadorArit','main.py',28),
-  ('operadorArit -> MULT','operadorArit',1,'p_operadorArit','main.py',29),
-  ('operadorArit -> DIVIDE','operadorArit',1,'p_operadorArit','main.py',30),
-  ('operadorArit -> MOD','operadorArit',1,'p_operadorArit','main.py',31),
+  ("S' -> programa","S'",1,None,None,None),
+  ('programa -> sentencia','programa',1,'p_programa','main.py',9),
+  ('programa -> sentencia programa','programa',2,'p_programa','main.py',10),
+  ('sentencia -> impresion','sentencia',1,'p_sentencia','main.py',13),
+  ('sentencia -> asignacion','sentencia',1,'p_sentencia','main.py',14),
+  ('sentencia -> defFuncion','sentencia',1,'p_sentencia','main.py',15),
+  ('sentencia -> funcion','sentencia',1,'p_sentencia','main.py',16),
+  ('impresion -> PRINT LPARENT parametros RPARENT','impresion',4,'p_impresion','main.py',24),
+  ('impresion -> PRINT LPARENT RPARENT','impresion',3,'p_impresion','main.py',25),
+  ('defFuncion -> FUNC VARIABLE LPARENT defParametros RPARENT tipo L_LLAVE cuerpoFuncion R_LLAVE','defFuncion',9,'p_defFuncion','main.py',30),
+  ('defParametros -> defParametro','defParametros',1,'p_defParametros','main.py',33),
+  ('defParametros -> defParametro COMMA defParametros','defParametros',3,'p_defParametros','main.py',34),
+  ('defParametro -> VARIABLE tipo','defParametro',2,'p_defParametro','main.py',37),
+  ('cuerpoFuncion -> retorno','cuerpoFuncion',1,'p_cuerpoFuncion','main.py',40),
+  ('cuerpoFuncion -> sentencia cuerpoFuncion','cuerpoFuncion',2,'p_cuerpoFuncion','main.py',41),
+  ('retorno -> RETURN expresion','retorno',2,'p_retorno','main.py',44),
+  ('funcion -> VARIABLE LPARENT parametros RPARENT','funcion',4,'p_funcion','main.py',49),
+  ('funcion -> VARIABLE LPARENT RPARENT','funcion',3,'p_funcion','main.py',50),
+  ('parametros -> parametro','parametros',1,'p_parametros','main.py',53),
+  ('parametros -> parametro COMMA parametros','parametros',3,'p_parametros','main.py',54),
+  ('parametro -> expresion','parametro',1,'p_parametro','main.py',57),
+  ('asignacion -> VARIABLE ASIG expresion','asignacion',3,'p_asignacion','main.py',62),
+  ('expresion -> valor','expresion',1,'p_expresion','main.py',65),
+  ('expresion -> valor operadorArit expresion','expresion',3,'p_expresion','main.py',66),
+  ('valor -> INTEGER','valor',1,'p_valor','main.py',70),
+  ('valor -> FLOAT','valor',1,'p_valor','main.py',71),
+  ('valor -> STRING','valor',1,'p_valor','main.py',72),
+  ('valor -> VARIABLE','valor',1,'p_valor','main.py',73),
+  ('tipo -> INT','tipo',1,'p_tipo','main.py',76),
+  ('tipo -> INT16','tipo',1,'p_tipo','main.py',77),
+  ('tipo -> INT32','tipo',1,'p_tipo','main.py',78),
+  ('tipo -> INT64','tipo',1,'p_tipo','main.py',79),
+  ('tipo -> UINT','tipo',1,'p_tipo','main.py',80),
+  ('tipo -> UINT16','tipo',1,'p_tipo','main.py',81),
+  ('tipo -> UINT32','tipo',1,'p_tipo','main.py',82),
+  ('tipo -> UINT64','tipo',1,'p_tipo','main.py',83),
+  ('tipo -> BOOL','tipo',1,'p_tipo','main.py',84),
+  ('tipo -> FLOAT32','tipo',1,'p_tipo','main.py',85),
+  ('tipo -> FLOAT64','tipo',1,'p_tipo','main.py',86),
+  ('tipo -> COMPLEX64','tipo',1,'p_tipo','main.py',87),
+  ('tipo -> COMPLEX128','tipo',1,'p_tipo','main.py',88),
+  ('tipo -> STRING','tipo',1,'p_tipo','main.py',89),
+  ('operadorArit -> PLUS','operadorArit',1,'p_operadorArit','main.py',93),
+  ('operadorArit -> MINUS','operadorArit',1,'p_operadorArit','main.py',94),
+  ('operadorArit -> MULT','operadorArit',1,'p_operadorArit','main.py',95),
+  ('operadorArit -> DIVIDE','operadorArit',1,'p_operadorArit','main.py',96),
+  ('operadorArit -> MOD','operadorArit',1,'p_operadorArit','main.py',97),
+  ('operadorMat -> EQ','operadorMat',1,'p_operadorMat','main.py',100),
+  ('operadorMat -> MENOR_QUE','operadorMat',1,'p_operadorMat','main.py',101),
+  ('operadorMat -> MAYOR_QUE','operadorMat',1,'p_operadorMat','main.py',102),
 ]
