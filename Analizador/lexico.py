@@ -20,6 +20,7 @@ reserved = {
     'import':'IMPORT',
     'inteface':'INTERFACE',
     'map':'MAP',
+    'new': 'NEW',
     'range':'RANGE',
     'return':'RETURN',
     'type':'TYPE',

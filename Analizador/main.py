@@ -29,6 +29,30 @@ def p_declararVariables(p):
 
 
 # STRUCTs
+def p_defStruct(p):
+    '''defStruct : TYPE VARIABLE STRUCT L_LLAVE defCampos R_LLAVE
+                | VAR VARIABLE IGUAL STRUCT L_LLAVE defCampos R_LLAVE L_LLAVE campos R_LLAVE'''
+
+def p_defCampos(p):
+    '''defCampos: defCampo
+                | defCampo COMMA defCampos'''
+
+def p_defCampo(p):
+    '''defCampo: VARIABLE tipo'''
+
+def p_campos(p):
+    '''campos: campo
+                | campo COMMA campos'''
+
+def p_campo(p):
+    '''campo : VARIABLE DOS_PUNTOS VALOR'''
+
+def p_newStructInst(p):
+    '''newStructInst : VARIABLE ASIG NEW LPARENT VARIABLE RPARENT'''
+
+def p_structInst(p):
+    '''structInst : VARIABLE L_LLAVE campos R_LLAVE
+                | VARIABLE L_LLAVE parametros R_LLAVE'''
 
 
 # IF-ELSE
@@ -66,6 +90,7 @@ def p_forTipoWhile(p):
 
 def p_forRango(p):
     '''forRango : FOR parametros RANGE coleccion cuerpoEstructura'''
+
 
 # ESTRUCTURA DE DATOS
 def p_coleccion(p):
@@ -144,6 +169,7 @@ def p_asignacion(p):
     '''asignacion : VARIABLE ASIG expresion
                 | VARIABLE ASIG expresionBooleana'''
 
+
 # EXPRESIONES
 def p_expresion(p):
     '''expresion : valor
@@ -152,6 +178,7 @@ def p_expresion(p):
 def p_expresionBooleana(p):
     '''expresionBooleana : booleano
                 | expresion operadorOrd expresion'''
+
 
 # VALORES Y TIPOS DE DATOS
 def p_valor(p):
