@@ -1,0 +1,7 @@
+# Ignorar archivos generados por el parser yacc de PLY
+parsetab.py
+parser.out
+
+# Ignorar archivos de bytecode de Python y el directorio  __pycache__
+__pycache__/
+*.pyc
