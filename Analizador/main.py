@@ -15,22 +15,47 @@ def p_sentencia(p):
                 | declararVariables
                 | defFuncion
                 | funcion
+                | if_else
                 | for
+                | pedirPorPantalla
                 | incrementadores'''
 
+
+# VARIABLES
 def p_declararVariables(p):
     '''declararVariables : VAR VARIABLE tipo
                         | VAR VARIABLE LCORCH INTEGER RCORCH tipo
                         | VAR VARIABLE LCORCH RCORCH tipo'''
 
-# IF-ELSE SWITCH FOR
+
+# STRUCTs
+
+
+# IF-ELSE
+def p_if_else(p):
+    '''if_else : estructuraIf
+                | estructuraIf estructuraElse'''
+
+def p_estructuraIf(p):
+    '''estructuraIf : IF expresionBooleana cuerpoEstructura'''
+
+def p_estructuraElse(p):
+    '''estructuraElse : ELSE estructuraIf
+                | ELSE cuerpoEstructura
+                | ELSE estructuraIf estructuraElse'''
+
+
+# SWITCH
+
+
 # FOR
 def p_for(p):
     '''for : forClasico
             | forTipoWhile
             | forRango'''
 
-def p_cuerpoEstructura(p): #Se puede usar en todas
+# Se puede usar en todas
+def p_cuerpoEstructura(p):
     '''cuerpoEstructura : L_LLAVE programa R_LLAVE'''
 
 def p_forClasico(p):
@@ -48,10 +73,10 @@ def p_coleccion(p):
                 | slice'''
 
 def p_array(p):
-    '''LCORCH INTEGER RCORCH tipo L_LLAVE parametros R_LLAVE'''
+    '''array : LCORCH INTEGER RCORCH tipo L_LLAVE parametros R_LLAVE'''
 
 def p_slice(p):
-    '''LCORCH RCORCH tipo L_LLAVE parametros R_LLAVE'''
+    '''slice : LCORCH RCORCH tipo L_LLAVE parametros R_LLAVE'''
 
 
 # IMPRESION
@@ -76,9 +101,11 @@ def p_impresionEspecial(p):
     '''impresionEspecial : FMT PUNTO SPRINTF LPARENT CADENA COMMA parametros RPARENT
                 | FMT PUNTO SPRINTF LPARENT RPARENT'''
 
+
 # PEDIR DATOS POR CONSOLA
 def p_pedirPorPantalla(p):
-    'pedirPorPantalla : FMT PUNTO SCANFLN LPARENT AMPERSAND VARIABLE RPARENT'
+    'pedirPorPantalla : FMT PUNTO SCANLN LPARENT AMPERSAND VARIABLE RPARENT'
+
 
 # DEFINICIÓN DE UNA FUNCIÓN
 def p_defFuncion(p):
@@ -112,25 +139,26 @@ def p_parametro(p):
     '''parametro : expresion'''
 
 
-#ASIGNACIÓN
+# ASIGNACIÓN
 def p_asignacion(p):
     '''asignacion : VARIABLE ASIG expresion
                 | VARIABLE ASIG expresionBooleana'''
 
+# EXPRESIONES
 def p_expresion(p):
     '''expresion : valor
-                | valor operadorArit expresion
-                | VARIABLE operadorArit expresion'''
+                | expresion operadorArit expresion'''
 
 def p_expresionBooleana(p):
-    '''expresionBooleana : VARIABLE operadorMat VARIABLE
-                            VARIABLE operadorMat Valor'''
+    '''expresionBooleana : booleano
+                | expresion operadorOrd expresion'''
 
+# VALORES Y TIPOS DE DATOS
 def p_valor(p):
     '''valor : INTEGER
                 | booleano
                 | FLOAT
-                | STRING
+                | CADENA
                 | VARIABLE
                 | coleccion'''
 
@@ -151,6 +179,8 @@ def p_tipo(p):
             | STRING
             '''
 
+
+# OPERADORES
 def p_operadorArit(p):
     '''operadorArit : PLUS
                 | MINUS
@@ -158,8 +188,8 @@ def p_operadorArit(p):
                 | DIVIDE
                 | MOD '''
 
-def p_operadorMat(p):
-    '''operadorMat : EQ
+def p_operadorOrd(p):
+    '''operadorOrd : EQ
                 | MENOR_QUE
                 | MAYOR_QUE
                 | MAYOR_IGUAL
@@ -177,7 +207,11 @@ def p_booleano(p):
 
 # Regla para definir un error
 def p_error(p):
-    logGo.log_warning(__name__, "Error de sintaxis en la línea %d" %p.lineno)
+    if p:
+        error = f"Error de sintaxis de token '{p.value}' de tipo: '{p.type}' en la línea {p.lineno}"
+    else:
+        error= "Error de sintaxis en EOF"
+    logGo.log_warning(__name__, error)
 
 # Construir el parser
 parser = yacc.yacc()
