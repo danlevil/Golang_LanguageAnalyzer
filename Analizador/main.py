@@ -12,28 +12,65 @@ def p_programa(p):
 def p_sentencia(p):
     '''sentencia : impresion
                 | asignacion
+                | declararVariables
                 | defFuncion
-                | funcion'''
+                | funcion
+                | for
+                | incrementadores'''
 
+def p_declararVariables(p):
+    '''declararVariables : VAR VARIABLE tipo
+                        | VAR VARIABLE LCORCH INTEGER RCORCH tipo
+                        | VAR VARIABLE LCORCH RCORCH tipo'''
 
 # IF-ELSE SWITCH FOR
+# FOR
+def p_for(p):
+    '''for : forClasico
+            | forTipoWhile
+            | forRango'''
+
+def p_cuerpoEstructura(p): #Se puede usar en todas
+    '''cuerpoEstructura : L_LLAVE programa R_LLAVE'''
+
+def p_forClasico(p):
+    'forClasico : FOR asignacion PUNTO_Y_COMA expresionBooleana PUNTO_Y_COMA incrementadores cuerpoEstructura'
+
+def p_forTipoWhile(p):
+    'forTipoWhile : FOR expresionBooleana cuerpoEstructura'
+
+def p_forRango(p):
+    '''forRango : FOR parametros RANGE coleccion cuerpoEstructura'''
+
+# ESTRUCTURA DE DATOS
+def p_coleccion(p):
+    '''coleccion : array
+                | slice'''
+
+def p_array(p):
+    '''LCORCH INTEGER RCORCH tipo L_LLAVE parametros R_LLAVE'''
+
+def p_slice(p):
+    '''LCORCH RCORCH tipo L_LLAVE parametros R_LLAVE'''
 
 
 # IMPRESION
 def p_impresion(p):
-    '''impresion: impresionSinSalto
+    '''impresion : impresionSinSalto
                 | impresionConSalto
                 | impresionEspecial'''
 
 def p_impresionSinSalto(p):
     '''impresionSinSalto : FMT PUNTO PRINT LPARENT parametros RPARENT
                 | FMT PUNTO PRINT LPARENT RPARENT
-                | FMT PUNTO PRINT LPARENT CADENA RPARENT'''
+                | FMT PUNTO PRINT LPARENT CADENA RPARENT
+                | FMT PUNTO PRINT LPARENT CADENA COMMA parametros RPARENT'''
 
 def p_impresionConSalto(p):
     '''impresionConSalto : FMT PUNTO PRINTLN LPARENT parametros RPARENT
                 | FMT PUNTO PRINTLN LPARENT RPARENT
-                | FMT PUNTO PRINTLN LPARENT CADENA RPARENT'''
+                | FMT PUNTO PRINTLN LPARENT CADENA RPARENT
+                | FMT PUNTO PRINTLN LPARENT CADENA COMMA parametros RPARENT'''
 
 def p_impresionEspecial(p):
     '''impresionEspecial : FMT PUNTO SPRINTF LPARENT CADENA COMMA parametros RPARENT
@@ -77,18 +114,25 @@ def p_parametro(p):
 
 #ASIGNACIÓN
 def p_asignacion(p):
-    'asignacion : VARIABLE ASIG expresion'
+    '''asignacion : VARIABLE ASIG expresion
+                | VARIABLE ASIG expresionBooleana'''
 
 def p_expresion(p):
     '''expresion : valor
-                | valor operadorArit expresion'''
+                | valor operadorArit expresion
+                | VARIABLE operadorArit expresion'''
 
+def p_expresionBooleana(p):
+    '''expresionBooleana : VARIABLE operadorMat VARIABLE
+                            VARIABLE operadorMat Valor'''
 
 def p_valor(p):
     '''valor : INTEGER
+                | booleano
                 | FLOAT
                 | STRING
-                | VARIABLE'''
+                | VARIABLE
+                | coleccion'''
 
 def p_tipo(p):
     '''tipo : INT
@@ -118,7 +162,18 @@ def p_operadorMat(p):
     '''operadorMat : EQ
                 | MENOR_QUE
                 | MAYOR_QUE
+                | MAYOR_IGUAL
+                | MENOR_IGUAL
                 '''
+
+def p_incrementadores(p):
+    '''incrementadores : VARIABLE INCREMENTADOR
+                        | VARIABLE DECREMENTADOR
+                        '''
+
+def p_booleano(p):
+    '''booleano : TRUE
+                | FALSE'''
 
 # Regla para definir un error
 def p_error(p):

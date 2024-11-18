@@ -47,6 +47,8 @@ reserved = {
 }
 # Daniel Villamar
 tokens = (
+    "INCREMENTADOR",
+    "DECREMENTADOR",
     "COMMENT_LINE",
     "COMMENT_BLOCK",
     "PLACEHOLDER",
@@ -75,10 +77,19 @@ tokens = (
     "IGUAL",
     "SEPARADOR",
     "PUNTO_Y_COMA",
+    "MAYOR_IGUAL",
+    "MENOR_IGUAL",
     "MENOR_QUE",
     "MAYOR_QUE",
     "AMPERSAND",
 ) + tuple(reserved.values())
+
+#Alex Peñafiel
+t_AMPERSAND = r'&'
+t_INCREMENTADOR = r'\+\+'
+t_DECREMENTADOR = r'--'
+t_MAYOR_IGUAL = r'>='
+t_MENOR_IGUAL = r'<='
 
 # Daniel Villamar
 t_PLUS = r'\+'
@@ -106,7 +117,8 @@ t_PUNTO_Y_COMA = r";"
 t_MENOR_QUE = r"<"
 t_MAYOR_QUE = r">"
 
-t_AMPERSAND = r'&'
+
+
 
 #INICIO DE LAS EXPRESIONES REGULARES
 
