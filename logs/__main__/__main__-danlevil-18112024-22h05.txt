@@ -1,0 +1,5 @@
+WARNING - Error de sintaxis en EOF
+WARNING - Error de sintaxis de token '}' de tipo: 'R_LLAVE' en la línea 1
+WARNING - Error de sintaxis en EOF
+WARNING - Error de sintaxis de token '}' de tipo: 'R_LLAVE' en la línea 1
+WARNING - Error de sintaxis en EOF

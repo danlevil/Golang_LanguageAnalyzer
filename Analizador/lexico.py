@@ -3,7 +3,7 @@ import leerGo as leerGo
 import logGo as logGo
 
 # ALEX PEÑAFIEL
-reserved = {
+reservadas = {
     'if': 'IF',
     'else': 'ELSE',
     'for': 'FOR',
@@ -44,23 +44,24 @@ reserved = {
     'Println':'PRINTLN',
     'Print':'PRINT',
     'Sprintf':'SPRINTF',
-    'Scanln':'SCANLN'
+    'Scanln':'SCANLN',
+    'make' : 'MAKE'
 }
 # Daniel Villamar
 tokens = (
     "INCREMENTADOR",
     "DECREMENTADOR",
-    "COMMENT_LINE",
-    "COMMENT_BLOCK",
+    "COMENTARIO_LINEA",
+    "COMENTARIO_BLOQUE",
     "PLACEHOLDER",
     "CADENA",
     "VARIABLE",
     "INTEGER",
     "FLOAT",
-    "PLUS",
-    "MINUS",
+    "SUM",
+    "MENOS",
     "MULT",
-    "DIVIDE",
+    "DIVISION",
     "MOD",
     "EQ",
     "ASIG",
@@ -72,7 +73,7 @@ tokens = (
     "R_LLAVE",
     "PUNTO",
     "DOS_PUNTOS",
-    "COMMA",
+    "COMA",
     "COMILLA",
     "COMILLA_SIMPLE",
     "IGUAL",
@@ -83,7 +84,7 @@ tokens = (
     "MENOR_QUE",
     "MAYOR_QUE",
     "AMPERSAND",
-) + tuple(reserved.values())
+) + tuple(reservadas.values())
 
 #Alex Peñafiel
 t_AMPERSAND = r'&'
@@ -93,12 +94,13 @@ t_MAYOR_IGUAL = r'>='
 t_MENOR_IGUAL = r'<='
 
 # Daniel Villamar
-t_PLUS = r'\+'
-t_MINUS = r'-'
+t_SUM = r'\+'
+t_MENOS = r'-'
 t_MULT = r'\*'
 t_MOD = r"%"
 t_EQ = r"=="
 t_ASIG = r":="
+t_IGUAL = r"="
 t_LPARENT = r'\('
 t_RPARENT = r'\)'
 t_LCORCH = r"\["
@@ -107,12 +109,10 @@ t_L_LLAVE = r"\{"
 t_R_LLAVE = r"\}"
 t_PUNTO = r"\."
 t_DOS_PUNTOS = r":"
-t_COMMA = r","
+t_COMA = r","
 t_COMILLA = r'"'
 t_COMILLA_SIMPLE = r"'"
-t_IGUAL = r"="
 t_SEPARADOR = r"\|"
-
 # Ronald Gaibor
 t_PUNTO_Y_COMA = r";"
 t_MENOR_QUE = r"<"
@@ -121,18 +121,19 @@ t_MAYOR_QUE = r">"
 
 
 
+
 #INICIO DE LAS EXPRESIONES REGULARES
 
-def t_COMMENT_LINE(t):
+def t_COMENTARIO_LINEA(t):
     r'//.*'
     pass
 
-def t_COMMENT_BLOCK(t):
+def t_COMENTARIO_BLOQUE(t):
     r'/\*([\s\S]*?)\*/'
     t.lexer.lineno += t.value.count('\n')
     pass
 
-def t_DIVIDE(t):
+def t_DIVISION(t):
     r'/'
     return t
 
@@ -156,10 +157,10 @@ def t_CADENA(t):
 
 def t_VARIABLE(t):
     r'[a-zA-Z]\w*'
-    t.type = reserved.get(t.value, "VARIABLE")
+    t.type = reservadas.get(t.value, "VARIABLE")
     return t
 
-def t_newline(t):
+def t_nuevaLinea(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 
@@ -173,9 +174,12 @@ lexer = lex.lex()
 
 #FIN DE LAS EXPRESIONES REGULARES
 
-"""Daniel Villamar:
+
+"""
+Daniel Villamar:
 Esta línea de codigo hace uso de la función para leer el codigo Go, retornando en un string largo el cual será analizado por el lexer"
 """
+
 # data=leerGo.codigo_go
 
 '''
