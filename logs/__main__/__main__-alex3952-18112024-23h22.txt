@@ -1,0 +1,2 @@
+WARNING - Error de sintaxis de token 'Printf' de tipo: 'VARIABLE' en la línea 11
+WARNING - Error de sintaxis de token 'Printf' de tipo: 'VARIABLE' en la línea 13

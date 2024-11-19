@@ -24,7 +24,9 @@ def p_sentencia(p):
                 | switch
                 | casos
                 | expresionBooleana
-                | struct'''
+                | struct
+                | package
+                | imports'''
 
 # VARIABLES
 def p_declararVariables(p):
@@ -33,6 +35,15 @@ def p_declararVariables(p):
                         | VAR VARIABLE LCORCH RCORCH tipo
                         | claveValorMap'''
 
+def p_package(p):
+    '''package : PACKAGE VARIABLE'''
+
+def p_imports(p):
+    '''imports : IMPORT LPARENT variasCadenas RPARENT'''
+
+def p_variasCadenas(p):
+    '''variasCadenas : CADENA
+                    | CADENA COMMA variasCadenas'''
 
 # STRUCTs
 
