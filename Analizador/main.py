@@ -22,7 +22,8 @@ def p_sentencia(p):
                 | map
                 | asignarValoresMap
                 | switch
-                | casos'''
+                | casos
+                | expresionBooleana'''
 
 # VARIABLES
 def p_declararVariables(p):
@@ -277,11 +278,26 @@ def p_error(p):
 # Construir el parser
 parser = yacc.yacc()
 
+print("Ingresa tu código. Finaliza con una línea vacía o EOF (Ctrl+D/Ctrl+Z).")
+
 while True:
     try:
-        s = input('python > ')
+        print("python > ", end="")
+        lines = []
+        while True:
+            line = input()
+            if line.strip() == "":
+                break
+            lines.append(line)
+        s = "\n".join(lines)  # Combina todas las líneas en una sola entrada
     except EOFError:
         break
-    if not s: continue
-    result = parser.parse(s)
-    logGo.log_info(__name__, result)
+
+    if not s.strip():
+        continue  # Si no hay entrada real, pasa al siguiente ciclo
+
+    try:
+        result = parser.parse(s)
+        print("Resultado:", result)
+    except Exception as e:
+        print("Error al analizar:", e)
