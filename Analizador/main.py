@@ -23,7 +23,8 @@ def p_sentencia(p):
                 | asignarValoresMap
                 | switch
                 | casos
-                | expresionBooleana'''
+                | expresionBooleana
+                | struct'''
 
 # VARIABLES
 def p_declararVariables(p):
@@ -34,6 +35,12 @@ def p_declararVariables(p):
 
 
 # STRUCTs
+
+def p_struct(p):
+    '''struct : defStruct
+                | newStructInst
+                | structInst'''
+
 def p_defStruct(p):
     '''defStruct : TYPE VARIABLE STRUCT L_LLAVE defCampos R_LLAVE
                 | VAR VARIABLE IGUAL STRUCT L_LLAVE defCampos R_LLAVE L_LLAVE campos R_LLAVE'''
@@ -218,7 +225,6 @@ def p_expresionBooleana(p):
 # VALORES Y TIPOS DE DATOS
 def p_valor(p):
     '''valor : INTEGER
-                | booleano
                 | FLOAT
                 | CADENA
                 | VARIABLE
