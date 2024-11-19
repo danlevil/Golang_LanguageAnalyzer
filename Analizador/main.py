@@ -43,7 +43,7 @@ def p_imports(p):
 
 def p_variasCadenas(p):
     '''variasCadenas : CADENA
-                    | CADENA COMMA variasCadenas'''
+                    | CADENA COMA variasCadenas'''
 
 # STRUCTs
 

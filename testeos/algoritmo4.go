@@ -36,7 +36,7 @@ func main() {
 
 	// Bucle for
 	for i := 0; i < 5; i++ {
-		fmt.Printf("Iteración %d\n", i)
+		fmt.Println("Iteración %d\n", i)
 	}
 }
 
