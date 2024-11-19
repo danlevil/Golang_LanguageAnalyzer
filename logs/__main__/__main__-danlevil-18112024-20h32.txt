@@ -1,0 +1,3 @@
+WARNING - Error de sintaxis en EOF
+WARNING - Error de sintaxis en EOF
+WARNING - Error de sintaxis de token '&' de tipo: 'AMPERSAND' en la línea 1

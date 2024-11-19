@@ -1,0 +1,5 @@
+WARNING - Error de sintaxis de token '"C"' de tipo: 'CADENA' en la línea 1
+WARNING - Error de sintaxis de token '"C"' de tipo: 'CADENA' en la línea 1
+WARNING - Error de sintaxis de token ':' de tipo: 'DOS_PUNTOS' en la línea 1
+WARNING - Error de sintaxis de token ':' de tipo: 'DOS_PUNTOS' en la línea 1
+WARNING - Error de sintaxis de token ':' de tipo: 'DOS_PUNTOS' en la línea 1

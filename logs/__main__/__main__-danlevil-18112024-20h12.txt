@@ -1,0 +1,3 @@
+WARNING - Error de sintaxis de token 'make' de tipo: 'MAKE' en la línea 1
+WARNING - Error de sintaxis de token 'make' de tipo: 'MAKE' en la línea 1
+WARNING - Error de sintaxis de token '&' de tipo: 'AMPERSAND' en la línea 1

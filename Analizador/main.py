@@ -18,14 +18,18 @@ def p_sentencia(p):
                 | if_else
                 | for
                 | pedirPorPantalla
-                | incrementadores'''
-
+                | incrementadores
+                | map
+                | asignarValoresMap
+                | switch
+                | casos'''
 
 # VARIABLES
 def p_declararVariables(p):
     '''declararVariables : VAR VARIABLE tipo
                         | VAR VARIABLE LCORCH INTEGER RCORCH tipo
-                        | VAR VARIABLE LCORCH RCORCH tipo'''
+                        | VAR VARIABLE LCORCH RCORCH tipo
+                        | claveValorMap'''
 
 
 # STRUCTs
@@ -34,18 +38,18 @@ def p_defStruct(p):
                 | VAR VARIABLE IGUAL STRUCT L_LLAVE defCampos R_LLAVE L_LLAVE campos R_LLAVE'''
 
 def p_defCampos(p):
-    '''defCampos: defCampo
-                | defCampo COMMA defCampos'''
+    '''defCampos : defCampo
+                | defCampo COMA defCampos'''
 
 def p_defCampo(p):
-    '''defCampo: VARIABLE tipo'''
+    '''defCampo : VARIABLE tipo'''
 
 def p_campos(p):
-    '''campos: campo
-                | campo COMMA campos'''
+    '''campos : campo
+                | campo COMA campos'''
 
 def p_campo(p):
-    '''campo : VARIABLE DOS_PUNTOS VALOR'''
+    '''campo : VARIABLE DOS_PUNTOS valor'''
 
 def p_newStructInst(p):
     '''newStructInst : VARIABLE ASIG NEW LPARENT VARIABLE RPARENT'''
@@ -68,9 +72,18 @@ def p_estructuraElse(p):
                 | ELSE cuerpoEstructura
                 | ELSE estructuraIf estructuraElse'''
 
-
+def p__switch(p):
+    '''switch : switchNoParametros
+                | switchParametro'''
 # SWITCH
+def p_switchParametro(p):
+    '''switchParametro : SWITCH parametros L_LLAVE casos R_LLAVE'''
+def p_switchNoParametros(p):
+    '''switchNoParametros : SWITCH  L_LLAVE casos R_LLAVE'''
 
+def p_casos(p):
+    '''casos : CASE expresionBooleana DOS_PUNTOS  programa
+    | CASE parametros DOS_PUNTOS  programa'''
 
 # FOR
 def p_for(p):
@@ -103,6 +116,27 @@ def p_array(p):
 def p_slice(p):
     '''slice : LCORCH RCORCH tipo L_LLAVE parametros R_LLAVE'''
 
+def p_map(p): 
+    '''map : declaracionMap 
+            | makeMap '''
+    
+def p_declaracionMap(p):
+    '''declaracionMap : VAR VARIABLE MAP LCORCH tipo RCORCH tipo
+                    | VARIABLE ASIG MAP LCORCH tipo RCORCH tipo
+                    | VARIABLE ASIG MAP LCORCH tipo RCORCH tipo cuerpoEstructura'''
+def p_makeMap(p):
+    '''makeMap : VARIABLE ASIG MAKE LPARENT MAP LCORCH tipo RCORCH tipo RPARENT
+            | VARIABLE ASIG MAKE LPARENT MAP LCORCH tipo RCORCH tipo RPARENT cuerpoEstructura'''
+def p_asignarValoresMap(p):
+    '''asignarValoresMap : asignarValorMap 
+                        | asignarValorMap  asignarValoresMap'''
+def p_asignarValorMap(p):
+    '''asignarValorMap : valor DOS_PUNTOS valor
+                | valor DOS_PUNTOS valor COMA'''
+def p_claveValorMap(p):
+    '''claveValorMap : VARIABLE LCORCH CADENA RCORCH IGUAL valor'''
+
+
 
 # IMPRESION
 def p_impresion(p):
@@ -114,16 +148,16 @@ def p_impresionSinSalto(p):
     '''impresionSinSalto : FMT PUNTO PRINT LPARENT parametros RPARENT
                 | FMT PUNTO PRINT LPARENT RPARENT
                 | FMT PUNTO PRINT LPARENT CADENA RPARENT
-                | FMT PUNTO PRINT LPARENT CADENA COMMA parametros RPARENT'''
+                | FMT PUNTO PRINT LPARENT CADENA COMA parametros RPARENT'''
 
 def p_impresionConSalto(p):
     '''impresionConSalto : FMT PUNTO PRINTLN LPARENT parametros RPARENT
                 | FMT PUNTO PRINTLN LPARENT RPARENT
                 | FMT PUNTO PRINTLN LPARENT CADENA RPARENT
-                | FMT PUNTO PRINTLN LPARENT CADENA COMMA parametros RPARENT'''
+                | FMT PUNTO PRINTLN LPARENT CADENA COMA parametros RPARENT'''
 
 def p_impresionEspecial(p):
-    '''impresionEspecial : FMT PUNTO SPRINTF LPARENT CADENA COMMA parametros RPARENT
+    '''impresionEspecial : FMT PUNTO SPRINTF LPARENT CADENA COMA parametros RPARENT
                 | FMT PUNTO SPRINTF LPARENT RPARENT'''
 
 
@@ -138,7 +172,7 @@ def p_defFuncion(p):
 
 def p_defParametros(p):
     '''defParametros : defParametro
-                | defParametro COMMA defParametros'''
+                | defParametro COMA defParametros'''
 
 def p_defParametro(p):
     '''defParametro : VARIABLE tipo'''
@@ -158,7 +192,7 @@ def p_funcion(p):
 
 def p_parametros(p):
     '''parametros : parametro
-                | parametro COMMA parametros'''
+                | parametro COMA parametros'''
 
 def p_parametro(p):
     '''parametro : expresion'''
@@ -209,10 +243,10 @@ def p_tipo(p):
 
 # OPERADORES
 def p_operadorArit(p):
-    '''operadorArit : PLUS
-                | MINUS
+    '''operadorArit : SUM
+                | MENOS
                 | MULT
-                | DIVIDE
+                | DIVISION
                 | MOD '''
 
 def p_operadorOrd(p):
