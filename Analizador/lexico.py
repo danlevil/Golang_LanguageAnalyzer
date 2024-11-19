@@ -180,9 +180,10 @@ Daniel Villamar:
 Esta línea de codigo hace uso de la función para leer el codigo Go, retornando en un string largo el cual será analizado por el lexer"
 """
 
-# data=leerGo.codigo_go
 
-'''
+'''  <----PARA PROBAR LA FUNCIONALIDAD DEL LEXER DESCOMENTAR
+data=leerGo.codigo_go
+
 lexer.input(data)
 while True:
 
@@ -190,4 +191,6 @@ while True:
     if not tok:
         break  # No more input
     logGo.logging.info(tok)
+    
+    <----PARA PROBAR LA FUNCIONALIDAD DEL LEXER DESCOMENTAR
 '''
