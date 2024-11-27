@@ -1,0 +1,7 @@
+WARNING - Error de sintaxis en EOF
+WARNING - Error de sintaxis en EOF
+WARNING - Error de sintaxis de token '=' de tipo: 'IGUAL' en la línea 7
+WARNING - Error de sintaxis de token ')' de tipo: 'RPARENT' en la línea 9
+WARNING - Error de sintaxis de token '=' de tipo: 'IGUAL' en la línea 11
+WARNING - Error de sintaxis de token '(' de tipo: 'LPARENT' en la línea 13
+WARNING - Error de sintaxis de token '}' de tipo: 'R_LLAVE' en la línea 23

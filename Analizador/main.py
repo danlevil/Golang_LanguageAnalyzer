@@ -5,6 +5,14 @@ import logGo as logGo
 # Logger
 logGo.setup_module_logger(__name__)
 
+dicc_variables = {}
+
+def verificar_variable(variable):
+    if not isinstance(variable, str) or variable in dicc_variables:
+        return
+    else:
+        raise ValueError(f"Error semántico: la variable '{variable}' no ha sido declarada.")
+
 def p_programa(p):
     '''programa : sentencia
                 | sentencia programa'''
@@ -26,7 +34,8 @@ def p_sentencia(p):
                 | expresionBooleana
                 | struct
                 | package
-                | imports'''
+                | imports
+                | expresion'''
 
 # VARIABLES
 def p_declararVariables(p):
@@ -222,24 +231,42 @@ def p_asignacion(p):
     '''asignacion : VARIABLE ASIG expresion
                 | VARIABLE ASIG expresionBooleana'''
 
+    dicc_variables[p[1]] = p[3]
+
 
 # EXPRESIONES
 def p_expresion(p):
     '''expresion : valor
-                | expresion operadorArit expresion'''
+                | valor operadorArit expresion'''
+    verificar_variable(p[1])
+
 
 def p_expresionBooleana(p):
-    '''expresionBooleana : booleano
-                | expresion operadorOrd expresion'''
+    '''expresionBooleana : INTEGER operadorOrd INTEGER
+                | FLOAT operadorOrd FLOAT
+                | VARIABLE operadorOrd VARIABLE
+                | VARIABLE operadorOrd INTEGER
+                | VARIABLE operadorOrd FLOAT
+                | INTEGER operadorOrd VARIABLE
+                | FLOAT operadorOrd VARIABLE
+                | CADENA EQ CADENA'''
+
+    verificar_variable(p[1])
+    verificar_variable(p[3])
 
 
 # VALORES Y TIPOS DE DATOS
 def p_valor(p):
-    '''valor : INTEGER
+    '''valor : VARIABLE
                 | FLOAT
                 | CADENA
-                | VARIABLE
+                | INTEGER
                 | coleccion'''
+
+    if isinstance(p[1], str) and p[1] in dicc_variables:
+        p[0] = dicc_variables[p[1]]
+    else:
+        p[0] = p[1]
 
 def p_tipo(p):
     '''tipo : INT
