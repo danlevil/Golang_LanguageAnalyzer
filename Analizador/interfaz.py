@@ -3,8 +3,7 @@ from tkinter import Scrollbar, Text
 from PIL import Image, ImageTk   # "pip install pillow"   Instalar pillow para manejar el logo de imgs.
 
 # Ruta del logo
-logo_path = "imgs/golanglogo.png"
-
+logo_path = "imgs/golanglogo2.png"
 
 # DEFINICION DE FUNCIONES A UTILIZAR DENTRO DEL "SHELL"
 
@@ -15,12 +14,15 @@ def capitalize_string(input_text):
 def run_function():
     input_text = input_text_widget.get("1.0", tk.END).strip()
     if input_text:
-        result = capitalize_string(input_text)  #FUNCION DE PROCESAMIENTO DE TEXTO SIENDO UTILIZADA
+        result = capitalize_string(input_text)  # FUNCION DE PROCESAMIENTO DE TEXTO SIENDO UTILIZADA
         output_text_widget.config(state=tk.NORMAL)
         output_text_widget.insert(tk.END, result + "\n")
         output_text_widget.config(state=tk.DISABLED)
 
 def reset_output():
+    # Limpia el cuadro de texto de entrada
+    input_text_widget.delete("1.0", tk.END)
+    # Limpia el cuadro de texto de salida
     output_text_widget.config(state=tk.NORMAL)
     output_text_widget.delete("1.0", tk.END)
     output_text_widget.config(state=tk.DISABLED)
