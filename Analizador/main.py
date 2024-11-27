@@ -7,6 +7,20 @@ logGo.setup_module_logger(__name__)
 
 dicc_variables = {}
 
+def verificar_tipo(tipo, valor):
+    if (tipo == "int" or tipo == "int16" or tipo == "int32" or tipo == "int64") and isinstance(valor, int):
+        return True
+    elif (tipo == "uint" or tipo == "uint16" or tipo == "uint32" or tipo == "uint64") and isinstance(valor, int):
+        return True
+    elif (tipo == "float32" or tipo == "float64") and isinstance(valor, float):
+        return True
+    elif tipo == "string" and isinstance(valor, str):
+        return True
+    elif tipo == "bool" and isinstance(valor, bool):
+        return True
+    else:
+        return False
+
 def verificar_variable(variable):
     if not isinstance(variable, str) or variable in dicc_variables:
         return
@@ -65,8 +79,11 @@ def p_declararVariables(p):
                         | claveValorMap'''
     if len(p) == 4:
         dicc_variables[p[2]] = ""
-    if len(p) == 6:
-        dicc_variables[p[2]] = p[5]
+    if len(p) == 6 and (p[4] == "=" or p[4] == ":="):
+        if verificar_tipo(p[3], p[5]):
+            dicc_variables[p[2]] = p[5]
+        else:
+            raise TypeError(f"Error semántico: El tipo no corresponde con el valor")
 
 def p_declararConst(p):
     '''declararConst : CONST VARIABLE tipo
@@ -263,10 +280,14 @@ def p_asignacion(p):
                 | VARIABLE IGUAL valor
                 | VARIABLE IGUAL expresion
                 | VARIABLE IGUAL expresionBooleana'''
-    if p[1] in dicc_variables:
-        dicc_variables[p[1]] = p[3]
+    if p[2] == "=":
+        if p[1] in dicc_variables:
+            dicc_variables[p[1]] = p[3]
+        else:
+            raise ValueError(f"Variable no declarada.")
     else:
-        raise TypeError(f"Variable no declarada")
+        dicc_variables[p[1]] = p[3]
+
 
 
 # EXPRESIONES
@@ -320,6 +341,7 @@ def p_tipo(p):
             | FLOAT64
             | STRING
             '''
+    p[0] = p[1]
 
 
 # OPERADORES
