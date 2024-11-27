@@ -4,27 +4,31 @@ import logGo as logGo
 
 # ALEX PEÑAFIEL
 reservadas = {
+    'true': 'TRUE',
+    'false': 'FALSE',
+    'var':'VAR',
+    'const':'CONST',
+    'import':'IMPORT',
+    'func':'FUNC',
+    'return':'RETURN',
+    'type':'TYPE',
+    'package':'PACKAGE',
+    'inteface':'INTERFACE',
+    # Estructuras de control
     'if': 'IF',
     'else': 'ELSE',
     'for': 'FOR',
-    'true': 'TRUE',
-    'false': 'FALSE',
-    'struct':'STRUCT',
     'switch':'SWITCH',
-    'break':'BREAK',
     'case':'CASE',
-    'const':'CONST',
+    'break':'BREAK',
     'continue':'CONTINUE',
     'default':'DEFAULT',
-    'func':'FUNC',
-    'import':'IMPORT',
+    # Estructuras de datos
+    'struct':'STRUCT',
     'map':'MAP',
     'new': 'NEW',
     'range':'RANGE',
-    'return':'RETURN',
-    'type':'TYPE',
-    'var':'VAR',
-    'package':'PACKAGE',
+    #TIPOS DE DATOS
     'int':'INT',
     'int16':'INT16',
     'int32':'INT32',
@@ -37,6 +41,7 @@ reservadas = {
     'float32':'FLOAT32',
     'float64':'FLOAT64',
     'string':'STRING',
+    # LIBRERIA STANDAR
     'fmt':'FMT',
     'Println':'PRINTLN',
     'Print':'PRINT',
@@ -46,8 +51,8 @@ reservadas = {
 }
 # Daniel Villamar
 tokens = (
-    "INCREMENTADOR",
-    "DECREMENTADOR",
+    "INCREMENTADOR", # ++
+    "DECREMENTADOR", # --
     "COMENTARIO_LINEA",
     "COMENTARIO_BLOQUE",
     "CADENA",
@@ -58,13 +63,13 @@ tokens = (
     "MENOS",
     "MULT",
     "DIVISION",
-    "MOD",
-    "EQ",
-    "ASIG",
-    "LPARENT",
-    "RPARENT",
-    "LCORCH",
-    "RCORCH",
+    "MOD", # %
+    "EQ",  # ==           
+    "ASIG", # :=
+    "LPARENT", # (
+    "RPARENT", # )
+    "LCORCH",  # {
+    "RCORCH",  # }
     "L_LLAVE",
     "R_LLAVE",
     "PUNTO",
@@ -73,7 +78,7 @@ tokens = (
     "COMILLA",
     "COMILLA_SIMPLE",
     "IGUAL",
-    "SEPARADOR",
+    "SEPARADOR", # |
     "PUNTO_Y_COMA",
     "MAYOR_IGUAL",
     "MENOR_IGUAL",

@@ -294,6 +294,7 @@ def p_expresionBooleana(p):
 
 # VALORES Y TIPOS DE DATOS
 def p_valor(p):
+<<<<<<< HEAD
     '''valor : VARIABLE
                 | FLOAT
                 | CADENA
@@ -305,6 +306,13 @@ def p_valor(p):
         p[0] = dicc_variables[p[1]]
     else:
         p[0] = p[1]
+=======
+    '''valor : INTEGER
+            |  FLOAT
+            |  CADENA
+            |  VARIABLE
+            |  coleccion'''
+>>>>>>> 9487091 (Style:Comentarios en distintas areas del codigo)
 
 def p_tipo(p):
     '''tipo : INT
@@ -358,7 +366,7 @@ def p_error(p):
 # Construir el parser
 parser = yacc.yacc()
 
-print("Ingresa tu código. Finaliza con una línea vacía o EOF (Ctrl+D/Ctrl+Z).")
+#print("Ingresa tu código. Finaliza con una línea vacía o EOF (Ctrl+D/Ctrl+Z).")
 
 while True:
     try:
