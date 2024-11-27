@@ -18,7 +18,6 @@ reservadas = {
     'default':'DEFAULT',
     'func':'FUNC',
     'import':'IMPORT',
-    'inteface':'INTERFACE',
     'map':'MAP',
     'new': 'NEW',
     'range':'RANGE',
@@ -37,8 +36,6 @@ reservadas = {
     'bool':'BOOL',
     'float32':'FLOAT32',
     'float64':'FLOAT64',
-    'complex64':'COMPLEX64',
-    'complex128':'COMPLEX128',
     'string':'STRING',
     'fmt':'FMT',
     'Println':'PRINTLN',
@@ -53,7 +50,6 @@ tokens = (
     "DECREMENTADOR",
     "COMENTARIO_LINEA",
     "COMENTARIO_BLOQUE",
-    "PLACEHOLDER",
     "CADENA",
     "VARIABLE",
     "INTEGER",
@@ -145,10 +141,6 @@ def t_FLOAT(t):
 def t_INTEGER(t):
     r'\d+'
     t.value = int(t.value)
-    return t
-
-def t_PLACEHOLDER(t):
-    r'%[sdf]'  # Captura %s, %d, %f, etc.
     return t
 
 def t_CADENA(t):

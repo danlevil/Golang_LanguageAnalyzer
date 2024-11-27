@@ -13,6 +13,23 @@ def verificar_variable(variable):
     else:
         raise ValueError(f"Error semántico: la variable '{variable}' no ha sido declarada.")
 
+def compatibilidad(variable1, variable2):
+    verificar_variable(variable1)
+    verificar_variable(variable2)
+    if isinstance(variable1, str):  # Si es una VARIABLE
+        tipo1 = type(dicc_variables[variable1])
+    else:
+        tipo1 = type(variable1)
+
+    if isinstance(variable2, str):  # Si es una VARIABLE
+        tipo2 = type(dicc_variables[variable2])
+    else:
+        tipo2 = type(variable2)
+
+    # Verificar que ambos operandos sean del mismo tipo exacto
+    if tipo1 != tipo2:
+        raise TypeError(f"Error semántico: Los parametros no son de tipos compatibles")
+
 def p_programa(p):
     '''programa : sentencia
                 | sentencia programa'''
@@ -35,14 +52,26 @@ def p_sentencia(p):
                 | struct
                 | package
                 | imports
-                | expresion'''
+                | expresion
+                | declararConst'''
 
 # VARIABLES
 def p_declararVariables(p):
     '''declararVariables : VAR VARIABLE tipo
+                        | VAR VARIABLE tipo ASIG valor
+                        | VAR VARIABLE tipo IGUAL valor
                         | VAR VARIABLE LCORCH INTEGER RCORCH tipo
                         | VAR VARIABLE LCORCH RCORCH tipo
                         | claveValorMap'''
+    if len(p) == 4:
+        dicc_variables[p[2]] = ""
+    if len(p) == 6:
+        dicc_variables[p[2]] = p[5]
+
+def p_declararConst(p):
+    '''declararConst : CONST VARIABLE tipo
+                    | CONST VARIABLE tipo ASIG valor
+                    | CONST VARIABLE tipo IGUAL valor'''
 
 def p_package(p):
     '''package : PACKAGE VARIABLE'''
@@ -210,7 +239,7 @@ def p_cuerpoFuncion(p):
                 | sentencia cuerpoFuncion'''
 
 def p_retorno(p):
-    '''retorno : RETURN expresion'''
+    '''retorno : RETURN valor'''
 
 
 # USO DE UNA FUNCIÓN
@@ -223,23 +252,33 @@ def p_parametros(p):
                 | parametro COMA parametros'''
 
 def p_parametro(p):
-    '''parametro : expresion'''
+    '''parametro : valor'''
 
 
 # ASIGNACIÓN
 def p_asignacion(p):
-    '''asignacion : VARIABLE ASIG expresion
-                | VARIABLE ASIG expresionBooleana'''
-
-    dicc_variables[p[1]] = p[3]
+    '''asignacion : VARIABLE ASIG valor
+                | VARIABLE ASIG expresion
+                | VARIABLE ASIG expresionBooleana
+                | VARIABLE IGUAL valor
+                | VARIABLE IGUAL expresion
+                | VARIABLE IGUAL expresionBooleana'''
+    if p[1] in dicc_variables:
+        dicc_variables[p[1]] = p[3]
+    else:
+        raise TypeError(f"Variable no declarada")
 
 
 # EXPRESIONES
 def p_expresion(p):
-    '''expresion : valor
-                | valor operadorArit expresion'''
-    verificar_variable(p[1])
-
+    '''expresion : INTEGER operadorArit INTEGER
+                | FLOAT operadorArit FLOAT
+                | VARIABLE operadorArit VARIABLE
+                | VARIABLE operadorArit INTEGER
+                | VARIABLE operadorArit FLOAT
+                | INTEGER operadorArit VARIABLE
+                | FLOAT operadorArit VARIABLE'''
+    compatibilidad(p[1],p[3])
 
 def p_expresionBooleana(p):
     '''expresionBooleana : INTEGER operadorOrd INTEGER
@@ -250,9 +289,7 @@ def p_expresionBooleana(p):
                 | INTEGER operadorOrd VARIABLE
                 | FLOAT operadorOrd VARIABLE
                 | CADENA EQ CADENA'''
-
-    verificar_variable(p[1])
-    verificar_variable(p[3])
+    compatibilidad(p[1], p[3])
 
 
 # VALORES Y TIPOS DE DATOS
@@ -261,7 +298,8 @@ def p_valor(p):
                 | FLOAT
                 | CADENA
                 | INTEGER
-                | coleccion'''
+                | coleccion
+                | booleano'''
 
     if isinstance(p[1], str) and p[1] in dicc_variables:
         p[0] = dicc_variables[p[1]]
@@ -280,8 +318,6 @@ def p_tipo(p):
             | BOOL
             | FLOAT32
             | FLOAT64
-            | COMPLEX64
-            | COMPLEX128
             | STRING
             '''
 
@@ -326,6 +362,7 @@ print("Ingresa tu código. Finaliza con una línea vacía o EOF (Ctrl+D/Ctrl+Z).
 
 while True:
     try:
+        print(dicc_variables)
         print("python > ", end="")
         lines = []
         while True:
