@@ -13,7 +13,6 @@ reservadas = {
     'return':'RETURN',
     'type':'TYPE',
     'package':'PACKAGE',
-    'inteface':'INTERFACE',
     # Estructuras de control
     'if': 'IF',
     'else': 'ELSE',

@@ -282,7 +282,18 @@ def p_asignacion(p):
                 | VARIABLE IGUAL expresionBooleana'''
     if p[2] == "=":
         if p[1] in dicc_variables:
-            dicc_variables[p[1]] = p[3]
+            print(type(dicc_variables[p[1]]))
+            print(p[3])
+            if isinstance(dicc_variables[p[1]], int) and isinstance(p[3], int):
+                dicc_variables[p[1]] = p[3]
+            elif isinstance(dicc_variables[p[1]], float) and isinstance(p[3], float):
+                dicc_variables[p[1]] = p[3]
+            elif isinstance(dicc_variables[p[1]], str) and isinstance(p[3], str):
+                dicc_variables[p[1]] = p[3]
+            elif isinstance(dicc_variables[p[1]], bool) and isinstance(p[3], bool):
+                dicc_variables[p[1]] = p[3]
+            else:
+                raise ValueError(f"Error semántico: El tipo no corresponde con el valor")
         else:
             raise ValueError(f"Variable no declarada.")
     else:
