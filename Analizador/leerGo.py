@@ -30,9 +30,9 @@ ruta_archivo_go = "../testeos/"+algoritmo
 
 codigo_go = leer_archivo_go(ruta_archivo_go)
 '''
-current_dir = os.path.dirname(os.path.abspath(__file__))
-numeroTest=pedirNumeroTest()
-algoritmo= "algoritmo"+numeroTest+".go"
-ruta_archivo_go = os.path.join(current_dir, '..', 'testeos', algoritmo)
+# current_dir = os.path.dirname(os.path.abspath(__file__))
+# numeroTest=pedirNumeroTest()
+# algoritmo= "algoritmo"+numeroTest+".go"
+# ruta_archivo_go = os.path.join(current_dir, '..', 'testeos', algoritmo)
 
-codigo_go = leer_archivo_go(ruta_archivo_go)
+# codigo_go = leer_archivo_go(ruta_archivo_go)

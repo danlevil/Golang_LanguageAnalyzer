@@ -1,28 +1,50 @@
 import tkinter as tk
 from tkinter import Scrollbar, Text
 from PIL import Image, ImageTk   # "pip install pillow"   Instalar pillow para manejar el logo de imgs.
+import lexico as lexical
+import syntaxAnalyzer as syntax
+import ply.yacc as yacc
+import logGo as log
 
 # Ruta del logo
 logo_path = "imgs/golanglogo2.png"
 
 # DEFINICION DE FUNCIONES A UTILIZAR DENTRO DEL "SHELL"
 
-def capitalize_string(input_text):
-    """Transforma el texto a mayúsculas."""
-    return input_text.upper()
-
 def run_function():
+    """Ejecuta el análisis léxico y sintáctico."""
     input_text = input_text_widget.get("1.0", tk.END).strip()
-    if input_text:
-        result = capitalize_string(input_text)  # FUNCION DE PROCESAMIENTO DE TEXTO SIENDO UTILIZADA
-        output_text_widget.config(state=tk.NORMAL)
-        output_text_widget.insert(tk.END, result + "\n")
+    if not input_text:
+        return
+    
+    # Limpiar el output antes de ejecutar
+    output_text_widget.config(state=tk.NORMAL)
+    output_text_widget.delete("1.0", tk.END)
+
+    # Análisis léxico
+    try:
+        lexical.lexer.input(input_text)
+        output_text_widget.insert(tk.END, "== Resultado del análisis léxico ==\n")
+        for tok in lexical.lexer:
+            output_text_widget.insert(tk.END, f"{tok}\n")
+    except Exception as e:
+        output_text_widget.insert(tk.END, f"Error en el análisis léxico: {str(e)}\n")
         output_text_widget.config(state=tk.DISABLED)
+        return
+    
+    # Análisis sintáctico
+    try:
+        syntax.parser.parse(input_text)
+        output_text_widget.insert(tk.END, "\n== Resultado del análisis sintáctico ==\n")
+        output_text_widget.insert(tk.END, "Análisis sintáctico completado sin errores.\n")
+    except Exception as e:
+        output_text_widget.insert(tk.END, f"Error en el análisis sintáctico: {str(e)}\n")
+    
+    output_text_widget.config(state=tk.DISABLED)
 
 def reset_output():
-    # Limpia el cuadro de texto de entrada
+    """Limpia el cuadro de entrada y salida."""
     input_text_widget.delete("1.0", tk.END)
-    # Limpia el cuadro de texto de salida
     output_text_widget.config(state=tk.NORMAL)
     output_text_widget.delete("1.0", tk.END)
     output_text_widget.config(state=tk.DISABLED)

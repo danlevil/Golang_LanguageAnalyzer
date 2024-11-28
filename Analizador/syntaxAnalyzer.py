@@ -3,23 +3,10 @@ from lexico import tokens
 import logGo as logGo
 
 # Logger
-logGo.setup_module_logger(__name__)
+#logGo.setup_module_logger(__name__)
 
 dicc_variables = {}
-
-def verificar_tipo(tipo, valor):
-    if (tipo == "int" or tipo == "int16" or tipo == "int32" or tipo == "int64") and isinstance(valor, int):
-        return True
-    elif (tipo == "uint" or tipo == "uint16" or tipo == "uint32" or tipo == "uint64") and isinstance(valor, int):
-        return True
-    elif (tipo == "float32" or tipo == "float64") and isinstance(valor, float):
-        return True
-    elif tipo == "string" and isinstance(valor, str):
-        return True
-    elif tipo == "bool" and isinstance(valor, bool):
-        return True
-    else:
-        return False
+dicc_constantes= {}
 
 def verificar_variable(variable):
     if not isinstance(variable, str) or variable in dicc_variables:
@@ -79,17 +66,18 @@ def p_declararVariables(p):
                         | claveValorMap'''
     if len(p) == 4:
         dicc_variables[p[2]] = ""
-    if len(p) == 6 and (p[4] == "=" or p[4] == ":="):
-        if verificar_tipo(p[3], p[5]):
-            dicc_variables[p[2]] = p[5]
-        else:
-            raise TypeError(f"Error semántico: El tipo no corresponde con el valor")
+    if len(p) == 6:
+        dicc_variables[p[2]] = p[5]
 
 def p_declararConst(p):
     '''declararConst : CONST VARIABLE tipo
                     | CONST VARIABLE tipo ASIG valor
                     | CONST VARIABLE tipo IGUAL valor'''
-
+    if len(p) == 4:
+        dicc_constantes[p[2]] = ""
+    if len(p) == 6:
+        dicc_constantes[p[2]] = p[5]
+        
 def p_package(p):
     '''package : PACKAGE VARIABLE'''
 
@@ -280,42 +268,10 @@ def p_asignacion(p):
                 | VARIABLE IGUAL valor
                 | VARIABLE IGUAL expresion
                 | VARIABLE IGUAL expresionBooleana'''
-    if p[2] == "=":
-        if p[1] in dicc_variables:
-            if isinstance(dicc_variables[p[1]], int) and isinstance(p[3], int):
-                dicc_variables[p[1]] = p[3]
-            elif isinstance(dicc_variables[p[1]], float) and isinstance(p[3], float):
-                dicc_variables[p[1]] = p[3]
-            elif isinstance(dicc_variables[p[1]], str) and isinstance(p[3], str):
-                dicc_variables[p[1]] = p[3]
-            elif isinstance(dicc_variables[p[1]], bool) and isinstance(p[3], bool):
-                dicc_variables[p[1]] = p[3]
-            else:
-                raise ValueError(f"Error semántico: El tipo no corresponde con el valor")
-        else:
-            raise ValueError(f"Variable no declarada.")
-    else:
+    if p[1] in dicc_variables:
         dicc_variables[p[1]] = p[3]
-
-def operacion(var1, op, var2):
-    if isinstance(var1, str) and var2 in dicc_variables:
-        variable1 = dicc_variables[var1]
     else:
-        variable1 = var1
-    if isinstance(var2, str) and var2 in dicc_variables:
-        variable2 = dicc_variables[var2]
-    else:
-        variable2 = var2
-    if op == "+":
-        return variable1 + variable2
-    elif op == "-":
-        return variable1 - variable2
-    elif op == "*":
-        return variable1 * variable2
-    elif op == "/":
-        return variable1 / variable2
-    elif op == "%":
-        return variable1 % variable2
+        raise TypeError(f"Variable no declarada")
 
 
 # EXPRESIONES
@@ -328,7 +284,6 @@ def p_expresion(p):
                 | INTEGER operadorArit VARIABLE
                 | FLOAT operadorArit VARIABLE'''
     compatibilidad(p[1],p[3])
-    p[0] = operacion(p[1],p[2],p[3])
 
 def p_expresionBooleana(p):
     '''expresionBooleana : INTEGER operadorOrd INTEGER
@@ -342,9 +297,9 @@ def p_expresionBooleana(p):
     compatibilidad(p[1], p[3])
 
 
-
 # VALORES Y TIPOS DE DATOS
 def p_valor(p):
+
     '''valor : VARIABLE
                 | FLOAT
                 | CADENA
@@ -356,6 +311,7 @@ def p_valor(p):
         p[0] = dicc_variables[p[1]]
     else:
         p[0] = p[1]
+
 
 def p_tipo(p):
     '''tipo : INT
@@ -371,7 +327,6 @@ def p_tipo(p):
             | FLOAT64
             | STRING
             '''
-    p[0] = p[1]
 
 
 # OPERADORES
@@ -381,7 +336,6 @@ def p_operadorArit(p):
                 | MULT
                 | DIVISION
                 | MOD '''
-    p[0] = p[1]
 
 def p_operadorOrd(p):
     '''operadorOrd : EQ
@@ -390,7 +344,6 @@ def p_operadorOrd(p):
                 | MAYOR_IGUAL
                 | MENOR_IGUAL
                 '''
-    p[0] = p[1]
 
 def p_incrementadores(p):
     '''incrementadores : VARIABLE INCREMENTADOR
@@ -414,25 +367,23 @@ parser = yacc.yacc()
 
 #print("Ingresa tu código. Finaliza con una línea vacía o EOF (Ctrl+D/Ctrl+Z).")
 
-while True:
-    try:
-        print(dicc_variables)
-        print("python > ", end="")
-        lines = []
-        while True:
-            line = input()
-            if line.strip() == "":
-                break
-            lines.append(line)
-        s = "\n".join(lines)  # Combina todas las líneas en una sola entrada
-    except EOFError:
-        break
+# while True:
+#     try:
+#         lines = []
+#         while True:
+#             line = input()
+#             if line.strip() == "":
+#                 break
+#             lines.append(line)
+#         s = "\n".join(lines)  # Combina todas las líneas en una sola entrada
+#     except EOFError:
+#         break
 
-    if not s.strip():
-        continue  # Si no hay entrada real, pasa al siguiente ciclo
+#     if not s.strip():
+#         continue  # Si no hay entrada real, pasa al siguiente ciclo
 
-    try:
-        result = parser.parse(s)
-        print("Resultado:", result)
-    except Exception as e:
-        print("Error al analizar:", e)
+#     try:
+#         result = parser.parse(s)
+#         print("Resultado:", result)
+#     except Exception as e:
+#         print("Error al analizar:", e)
