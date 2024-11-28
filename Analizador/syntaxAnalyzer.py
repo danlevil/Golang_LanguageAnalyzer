@@ -268,10 +268,15 @@ def p_asignacion(p):
                 | VARIABLE IGUAL valor
                 | VARIABLE IGUAL expresion
                 | VARIABLE IGUAL expresionBooleana'''
-    if p[1] in dicc_variables:
+    if p[2] == ":=":
+        # Declarar y asignar la variable simultáneamente
+        dicc_variables[p[1]] = p[3]
+    elif p[1] in dicc_variables:
+        # Asignación normal
         dicc_variables[p[1]] = p[3]
     else:
-        raise TypeError(f"Variable no declarada")
+        # Error: Variable no declarada
+        raise TypeError(f"Variable '{p[1]}' no declarada")
 
 
 # EXPRESIONES
