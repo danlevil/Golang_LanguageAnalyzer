@@ -20,7 +20,6 @@ reservadas = {
     'switch':'SWITCH',
     'case':'CASE',
     'break':'BREAK',
-    'continue':'CONTINUE',
     'default':'DEFAULT',
     # Estructuras de datos
     'struct':'STRUCT',

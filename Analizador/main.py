@@ -282,8 +282,6 @@ def p_asignacion(p):
                 | VARIABLE IGUAL expresionBooleana'''
     if p[2] == "=":
         if p[1] in dicc_variables:
-            print(type(dicc_variables[p[1]]))
-            print(p[3])
             if isinstance(dicc_variables[p[1]], int) and isinstance(p[3], int):
                 dicc_variables[p[1]] = p[3]
             elif isinstance(dicc_variables[p[1]], float) and isinstance(p[3], float):
@@ -299,6 +297,25 @@ def p_asignacion(p):
     else:
         dicc_variables[p[1]] = p[3]
 
+def operacion(var1, op, var2):
+    if isinstance(var1, str) and var2 in dicc_variables:
+        variable1 = dicc_variables[var1]
+    else:
+        variable1 = var1
+    if isinstance(var2, str) and var2 in dicc_variables:
+        variable2 = dicc_variables[var2]
+    else:
+        variable2 = var2
+    if op == "+":
+        return variable1 + variable2
+    elif op == "-":
+        return variable1 - variable2
+    elif op == "*":
+        return variable1 * variable2
+    elif op == "/":
+        return variable1 / variable2
+    elif op == "%":
+        return variable1 % variable2
 
 
 # EXPRESIONES
@@ -311,6 +328,7 @@ def p_expresion(p):
                 | INTEGER operadorArit VARIABLE
                 | FLOAT operadorArit VARIABLE'''
     compatibilidad(p[1],p[3])
+    p[0] = operacion(p[1],p[2],p[3])
 
 def p_expresionBooleana(p):
     '''expresionBooleana : INTEGER operadorOrd INTEGER
@@ -322,6 +340,7 @@ def p_expresionBooleana(p):
                 | FLOAT operadorOrd VARIABLE
                 | CADENA EQ CADENA'''
     compatibilidad(p[1], p[3])
+
 
 
 # VALORES Y TIPOS DE DATOS
@@ -362,6 +381,7 @@ def p_operadorArit(p):
                 | MULT
                 | DIVISION
                 | MOD '''
+    p[0] = p[1]
 
 def p_operadorOrd(p):
     '''operadorOrd : EQ
@@ -370,6 +390,7 @@ def p_operadorOrd(p):
                 | MAYOR_IGUAL
                 | MENOR_IGUAL
                 '''
+    p[0] = p[1]
 
 def p_incrementadores(p):
     '''incrementadores : VARIABLE INCREMENTADOR
