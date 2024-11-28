@@ -13,8 +13,8 @@ import (
 
 // Declaración de variables globales
 var x int = 10
-var y = 20.5
-const pi = 3.14159
+var y float64 = 20.5
+const pi float32 = 3.14159
 
 func main() {
 	// Declaración de variables locales
@@ -22,10 +22,6 @@ func main() {
 	message := "¡Hola, mundo!"
 
 	fmt.Println(message)
-
-	// Llamada a una función con argumentos
-	result := add(x, int(y))
-	fmt.Printf("Resultado: %d\n", result)
 
 	// Operaciones condicionales y de bucle
 	if x > 5 {
