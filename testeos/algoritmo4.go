@@ -23,7 +23,7 @@ func main() {
 
 	fmt.Println(message)
 
-	// Operaciones condicionales y de bucle
+	//Operaciones condicionales y de bucle
 	if x > 5 {
 		fmt.Println("x es mayor que 5")
 	} else {
@@ -35,8 +35,10 @@ func main() {
 		fmt.Println("Iteración %d\n", i)
 	}
 }
+const pi float32 = 3.14159
 
-// Función simple de suma
+// // Función simple de suma
 func add(a int, b int) int {
+	
 	return a + b
 }

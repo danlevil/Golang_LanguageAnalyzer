@@ -161,7 +161,8 @@ def p_switchNoParametros(p):
 
 def p_casos(p):
     '''casos : CASE expresionBooleana DOS_PUNTOS  programa
-    | CASE parametros DOS_PUNTOS  programa'''
+    | CASE parametros DOS_PUNTOS  programa
+    | DEFAULT DOS_PUNTOS programa'''
 
 # FOR
 def p_for(p):
@@ -245,8 +246,48 @@ def p_pedirPorPantalla(p):
 
 
 # DEFINICIÓN DE UNA FUNCIÓN
+funcion_actual = None
+dicc_funciones = {}
+
+def get_return(cuerpo):
+    for stmt in cuerpo:
+        if stmt['tipo'] == 'return':
+            return stmt
+
 def p_defFuncion(p):
-    '''defFuncion : FUNC VARIABLE LPARENT defParametros RPARENT tipo L_LLAVE cuerpoFuncion R_LLAVE'''
+    '''defFuncion : FUNC VARIABLE LPARENT defParametros RPARENT tipo L_LLAVE cuerpoFuncion R_LLAVE
+                    | FUNC VARIABLE LPARENT RPARENT tipo L_LLAVE cuerpoFuncion R_LLAVE'''
+    global funcion_actual
+    nombre_funcion = p[2]
+    parametros = ""
+
+    if len(p) == 10:
+        parametros = p[4]
+        tipo_retorno = p[6]
+        cuerpo = p[8]
+    else:
+        tipo_retorno = p[5]
+        cuerpo = p[7]
+
+    funcion_actual = {
+        'nombre': nombre_funcion,
+        'parametros': parametros,
+        'tipo_retorno': tipo_retorno,
+        'cuerpo': cuerpo,
+        'retorno_encontrado': False
+    }
+
+    valor_retorno = get_return(cuerpo)['valor']
+    valor_retorno_esperado = funcion_actual['tipo_retorno']
+
+    if not verificar_tipo(valor_retorno_esperado, valor_retorno):
+        raise TypeError(f"Error semántico: Función '{funcion_actual['nombre']}' espera '{valor_retorno_esperado}', pero se retornó'{valor_retorno}'.")
+    else:
+        funcion_actual['retorno_encontrado'] = True
+
+    p[0] = funcion_actual
+    dicc_funciones[nombre_funcion] = funcion_actual
+    funcion_actual = None
 
 def p_defParametros(p):
     '''defParametros : defParametro
@@ -258,9 +299,16 @@ def p_defParametro(p):
 def p_cuerpoFuncion(p):
     '''cuerpoFuncion : retorno
                 | sentencia cuerpoFuncion'''
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = [{'tipo': 'sentencia', 'valor': p[1]}] + p[2]
 
 def p_retorno(p):
-    '''retorno : RETURN valor'''
+    '''retorno : RETURN valor
+    | RETURN expresion
+    | RETURN VARIABLE operadorArit VARIABLE'''
+    p[0] = {'tipo': 'return', 'valor': p[2]}
 
 
 # USO DE UNA FUNCIÓN
@@ -274,6 +322,7 @@ def p_parametros(p):
 
 def p_parametro(p):
     '''parametro : valor'''
+    p[0] = p[1]
 
 
 # ASIGNACIÓN
@@ -281,6 +330,7 @@ def p_asignacion(p):
     '''asignacion : VARIABLE ASIG valor
                 | VARIABLE ASIG expresion
                 | VARIABLE ASIG expresionBooleana
+                | VARIABLE ASIG coleccion
                 | VARIABLE IGUAL valor
                 | VARIABLE IGUAL expresion
                 | VARIABLE IGUAL expresionBooleana'''
@@ -329,7 +379,9 @@ def p_expresion(p):
                 | VARIABLE operadorArit INTEGER
                 | VARIABLE operadorArit FLOAT
                 | INTEGER operadorArit VARIABLE
-                | FLOAT operadorArit VARIABLE'''
+                | FLOAT operadorArit VARIABLE
+                | CADENA SUM CADENA'''   
+    #Hay que definir que la expresion pueda escribirse de "manera incorrecta" para que pueda salir el error semántico
     compatibilidad(p[1],p[3])
     p[0] = operacion(p[1], p[2], p[3])
 
@@ -416,7 +468,7 @@ def p_error(p):
 # Construir el parser
 parser = yacc.yacc()
 
-#print("Ingresa tu código. Finaliza con una línea vacía o EOF (Ctrl+D/Ctrl+Z).")
+# print("Ingresa tu código. Finaliza con una línea vacía o EOF (Ctrl+D/Ctrl+Z).")
 
 # while True:
 #     try:

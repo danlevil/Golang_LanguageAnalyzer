@@ -8,7 +8,7 @@ fmt.Println("Precio:", precio)
 fmt.Print("Nombre: ", nombre, " | ")
 fmt.Print("Edad: ", edad, " | ")
 fmt.Print("Precio: ", precio, " | ")
-mensaje := fmt.Sprintf("\nNombre: %s | Edad: %d | Precio: %.2f", nombre, edad, precio)
+
 switch numero {
 case 1, 3, 5:
 	fmt.Println("Número es impar")
